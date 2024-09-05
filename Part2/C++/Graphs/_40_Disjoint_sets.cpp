@@ -6,8 +6,6 @@ using namespace std;
 /*
 Minimum Spanning Tree | Min cost to all nodes with n nodes and n-1 edges 
 
-Prims Algo | PQ | MST | VIS 
-
 Given an array A[] that stores all number from 1 to N (both inclusive and sorted) and K queries.
 
 The task is to do the following operations on array elements :
@@ -20,91 +18,111 @@ The ultimate parent is the topmost node such that par[node]=node.
 
 */
 
-class Solution
+class DisjointSet
 {
+    // create a rank, parent size array for Union by rank
+    // creaet a size, parent size array for Union by size
+    vector<int> rank, parent, size;
 public:
-    int primsAlgo(int src,vector<pair<int,int>> adj_weighted_list[],int n,int m){
-        // create a visited array 
-        vector<int> visited(n,0);
-
-        // create a mst ds 
-        vector<pair<int,int>> mst;
-
-        // add src to pq 
-        priority_queue<pair<int,pair<int,int>>, vector<pair<int,pair<int,int>>>, greater<pair<int,pair<int,int>>>> pq;
-
-        pq.push({0,{src,-1}});    // -1 means no parent
-        int sum=0;
-
-        // O(E)
-        while(!pq.empty()){
-            int wt = pq.top().first;
-            int node = pq.top().second.first;
-            int parent = pq.top().second.second;
-            pq.pop();
-
-            // if node is already visited, skip this iteration
-            if(visited[node]==1) continue;
-
-            // mark this as visited 
-            visited[node]=1;
-
-            // if parent is not -1 then add this edge to mst
-            if(parent!=-1) mst.emplace_back(node,parent);
-
-            // add the sum of mst
-            sum+=wt;
-
-            // ask neighbours 
-            for(auto neigh: adj_weighted_list[node]){
-                int n = neigh.first;
-                int edge_weight = neigh.second;
-
-                // if not visited 
-                if(visited[n]==0){
-                    // add it to queue 
-                    pq.push({edge_weight,{n, node}});
-                }
-            }
+    // Constructor function to get initial configurations
+    DisjointSet(int n){
+        rank.resize(n+1, 0);
+        parent.resize(n+1);
+        size.resize(n+1,1);
+        for(int i=0;i<=n;i++){
+            parent[i]=i;
         }
-
-        return sum;
     }
 
+    // function to find the ultimate parent recursively along with path compression 
+    int findParent(int node){
+        if(node == parent[node]){
+            return node;
+        }
+
+        // return by finding its ultimate parent while backtracking
+        return parent[node] = findParent(parent[node]);
+    }
+
+    // get the union by rank 
+    void UnionByRank(int u,int v){
+        // get the ultimate parents of u and v nodes
+        int pu = findParent(u);
+        int pv = findParent(v);
+
+        // if they have same parnent, just return 
+        if(pu == pv) return;
+
+        // else if check the rank 
+        if(rank[pu] < rank[pv]){
+            parent[pu] = parent[pv];
+        }else if(rank[pu] > rank[pv]){
+            parent[pv] = parent[pu];
+        }else{
+            parent[pv] = parent[pu];
+            // update the rank 
+            rank[pu]++;
+        }
+    }
+
+    // union by size -> keeps the track of the size of the component
+    void UnionBySize(int u,int v){
+        // get the ultimate parents of u and v nodes
+        int pu = findParent(u);
+        int pv = findParent(v);
+
+        // if they have same parnent, just return 
+        if(pu == pv) return;
+
+        // else if check the rank 
+        if(size[pu] < size[pv]){
+            parent[pu] = parent[pv];
+            size[pv] += size[pu];
+        }else if(rank[pu] > rank[pv]){
+            parent[pv] = parent[pu];
+            size[pu] += size[pv];
+        }else{
+            parent[pu] = parent[pv];
+            size[pv] += size[pu];
+        }
+    }
 
 };
 
 void solve()
 {
-    // grid
-    int n;   // nodes
-    int m;
-    int src;
-    cin >> n >> m >> src;
+//     DisjointSet s(7);
+//     s.UnionByRank(1,2);
+//     s.UnionByRank(2,3);
+//     s.UnionByRank(4,5);
+//     s.UnionByRank(6,7);
+//     s.UnionByRank(5,6);
+//     // check if 3 and 7 belongs to same component or not
+//     if(s.findParent(3) == s.findParent(7)){
+//         cout<<"same\n";
+//     }else cout<<"Not same\n";
 
-    // provided with a weighted adj matrix 
-    // grid
-    vector<pair<int,int>> adj_weighted_list[n];
-    for(int k=0;k<m;k++){
-        int u,v,wt;
-        cin>>u>>v>>wt;
+//    s.UnionByRank(3,7);
+//     if(s.findParent(3) == s.findParent(7)){
+//         cout<<"same\n";
+//     }else cout<<"Not same\n";
 
-        // undirected weighted graph
-        adj_weighted_list[u].push_back({v,wt});
-        adj_weighted_list[v].push_back({u,wt});
-    }
+    // Union by size
+    DisjointSet s(7);
+    s.UnionBySize(1,2);
+    s.UnionBySize(2,3);
+    s.UnionBySize(4,5);
+    s.UnionBySize(6,7);
+    s.UnionBySize(5,6);
+    // check if 3 and 7 belongs to same component or not
+    if(s.findParent(3) == s.findParent(7)){
+        cout<<"same\n";
+    }else cout<<"Not same\n";
 
-    // for(int i = 0; i < n; i++){  // Iterate through all nodes
-    //     cout << "Node " << i << ": ";
-    //     for(auto neigh : adj_weighted_list[i]){
-    //         cout << "(" << neigh.first << ", " << neigh.second << ") ";  // Print neighbor and weight
-    //     }
-    //     cout << endl;
-    // }
-
-    Solution s;
-    int res = s.primsAlgo(src,adj_weighted_list,n,m);
-    cout<<res<<endl;
+   s.UnionBySize(3,7);
+    if(s.findParent(3) == s.findParent(7)){
+        cout<<"same\n";
+    }else cout<<"Not same\n";
 }
 
 
