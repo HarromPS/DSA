@@ -1,0 +1,56 @@
+INSERT INTO student(ID,_name,dept,totl_cred) VALUES
+	(00128,'zhang','comp_sci',102),
+    (12345,'shekhar','comp_sci',32),
+    (19991,'brandt','history',80),
+    (23121,'chavez','finance',110),
+    (44553,'petlier','physics',156),
+    (45678,'levy','physics',46),
+    (54321,'williams','comp_sci',54),
+    (55739,'sanchez','music',38),
+    (70557,'snow','physics',0),
+    (76543,'brown','comp_sci',58),
+    (76653,'aoi','elec_eng',60),
+    (98765,'bouriks','elec_eng',98),
+    (98988,'tanaka','biology',120);
+
+INSERT INTO teaches(ID,course_id,sem_id,semester,_year) VALUES
+	(10101,'cs-101','1','fall',2009),
+    (10101,'cs-315','1','spring',2010),
+    (10101,'cs-347','1','fall',2009),
+    (12121,'fin-201','1','spring',2010),
+    (15151,'mu-199','1','spring',2010),
+    (22222,'phy-101','1','fall',2009),
+    (32343,'his-351','1','spring',2010),
+    (45565,'cs-101','1','spring',2010),
+    (45565,'cs-319','1','spring',2010),
+    (76766,'bio-101','1','summer',2009),
+    (76766,'bio-301','1','summer',2010),
+    (83821,'cs-190','1','spring',2009),
+    (83821,'cs-190','2','spring',2009),
+    (83821,'cs-319','2','spring',2010),
+    (98345,'ee-181','1','spring',2009);
+
+ INSERT INTO course(course_id,title,dept,credits) VALUES
+	('bio-101','...','biology',4),
+    ('bio-301','...','biology',4),
+    ('bio-399','...','biology',3),
+    ('cs-101','...','comp_sci',4),
+    ('cs-190','...','comp_sci',4),
+    ('cs-315','...','comp_sci',3),
+    ('cs-319','...','comp_sci',3),
+    ('cs-345','...','comp_sci',3),
+    ('ee-181','...','ele_eng',3),
+    ('fin-201','...','finance',3),
+    ('his-351','...','history',3),
+    ('mu-199','...','music',3),
+    ('phy-101','...','physics',4);
+
+
+INSERT INTO prereq(course_id,prereq_id) VALUES
+    ('BIO-301','BIO-101'),
+    ('BIO-399','BIO-101'),
+    ('CS-190 ','CS-101'),
+    ('CS-315','CS-101'),
+    ('CS-319','CS-101'),
+    ('CS-347','CS-101'),
+    ('EE-181','PHY-101'),

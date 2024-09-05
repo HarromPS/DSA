@@ -1,0 +1,13 @@
+1st aim : study basic unix commands
+2nd aim : write a c program using the following system call as fork, exec, getpid, exit, wait, close, stat, opendir, readdir
+3rd aim : write a c program to simulate unix command like cp, grep and ls
+4th aim : write a simple shell program by using conditional branching and looping statements
+5th aim : write a c program to implement priority scheduling algorithm
+6th aim : write a c program to implement round robin scheduling algorithm
+7th aim : write a c program to implement FCFS & SJF scheduling algorithm
+8th aim : write a c program to implement producer consumer problem using semaphore
+9th aim : write a c program to implement bankers algorithm for deadlock avoidence
+10th aim :
+a. write a c program to implement the memory allocation method for fix partition using first fit.
+b. write a c program for FIFO page replacement algorithm
+c. write a c program for LRU page algorithm

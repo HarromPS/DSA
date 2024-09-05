@@ -1,0 +1,77 @@
+-- creating tables in SQL
+CREATE TABLE instructor(
+	ID INT,
+	student_name VARCHAR(255),
+	dept_name VARCHAR(255),
+	salary BIGINT
+);
+
+CREATE TABLE department(
+	dept_name VARCHAR(255),
+	building VARCHAR(255),
+	budget BIGINT
+);
+
+CREATE TABLE student(
+	ID INT,
+	student_name VARCHAR(255),
+	dept_name VARCHAR(255),
+	total_cred INT
+);
+
+CREATE TABLE course(
+	course_id VARCHAR(255),
+	title VARCHAR(255),
+	dept_name VARCHAR(255),
+	credits INT
+);
+
+CREATE TABLE time_slot(
+	time_slot_id INT,
+	day_name VARCHAR(255),
+	start_time VARCHAR(255),
+	end_time VARCHAR(255)
+);
+
+CREATE TABLE teaches(
+	ID INT,
+	course_id VARCHAR(255),
+	sec_id VARCHAR(255),
+	semester VARCHAR(255),
+	course_year INT,
+);
+
+CREATE TABLE classroom(
+	building VARCHAR(255),
+	room_no VARCHAR(255),
+	capacity VARCHAR(255)
+);
+
+CREATE TABLE section(
+	course_id VARCHAR(255),
+	sec_id INT,
+	semester VARCHAR(255),
+	course_year INT,
+	building VARCHAR(255),
+	room_no INT,
+	time_slot_id INT
+);
+
+CREATE TABLE takes(
+	ID INT,
+	course_id VARCHAR(255),
+	sec_id INT,
+	semester VARCHAR(255),
+	course_year INT,
+	grade VARCHAR(3)
+);
+
+CREATE TABLE prereq(
+	course_id VARCHAR(255),
+	prereq_id VARCHAR(255)
+);
+
+CREATE TABLE advisor(
+	s_id VARCHAR(255),
+	i_id VARCHAR(255)
+);

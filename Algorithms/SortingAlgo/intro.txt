@@ -1,0 +1,17 @@
+Sorting Algorithm - process to place elements in increasing(ascending)
+or decreasing (descending) order.
+A procedure that sorts elements in minimum time with effencicy & with 
+ease is called Sorting Algorithm.
+==> Analysis Criteria
+1) Time complexity - how less time taken for large inputs.
+2) Space Complexity - how less memory is consumed by the algo.
+    In-place algo- taking constant time.
+3) Stability - Retaining the order of the same elements after sorting.
+4) Internal/External Sorting Algo- 
+    Internal= Loads all the data into the memory(RAM).
+    External= do not Loads all data in memory, takes data from 
+    disk, hard drive, databases,etc.
+5) Adaptive - for already sorted algorithm it takes less time & provides
+relatively some advantages. 
+5) Recursive/Non-Recursive - if algo uses recursion = Recursive
+if not uses recursion = Non-Recursive.

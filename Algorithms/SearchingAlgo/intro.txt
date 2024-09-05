@@ -1,0 +1,14 @@
+There are different searching algorithms to search an element from array 
+linked list, graphs, strings, etc.
+1) Linear Search 
+==> Searches an element in an array linearly 
+O(n) time complexity.
+
+2) Binary Search
+==> Search an element on an interval
+==> Binary Search is performed on Sorted elements
+O(log n) time complexity
+
+3) Jump Search 
+==> Searches an element in an interval of a factor of the indexes.
+O(n (log n)) time complexity

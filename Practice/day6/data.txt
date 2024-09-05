@@ -1,0 +1,88 @@
+-- filling rows and columns of all the tables created in university
+
+--SELECT * FROM instructor;
+INSERT INTO instructor(ID , student_name, dept_name, salary ) VALUES
+	(10101,'Srivinasan','Comp.Sci',65000),
+	(12121,'Wu','Finance',90000),
+	(15151,'Mozart','Music',40000),
+	(22222,'Einstein','Physics',95000),
+	(32343,'El Said','History',60000),
+	(33456,'Gold','Physics',87000),
+	(45565,'Jratz','Comp.Sci',75000),
+	(76777,'Claififeri','History',62000),
+	(83820,'Singh','Finance',80000),
+	(98345,'Krick','Biology',72000),
+	(58583,'Kim','Comp.Sci',92000),
+	(76766,'Brad','Elec.Eng',80000);
+
+-- department
+--SELECT * FROM department;
+INSERT INTO department(dept_name,building,budget) VALUES
+	('Biology','Watson',90000),
+	('Comp.Sci','Taylor',100000),
+	('Elec.Eng','Taylor',85000),
+	('Finance','Painter',120000),
+	('History','Painter',50000),
+	('Music','Packward',80000),
+	('Physics','Watson',70000),
+	(null,'Taylor',null);
+
+-- student
+--SELECT * FROM student;
+INSERT INTO student(ID, student_name,dept_name,total_cred)  VALUES
+	(00128,'Zhang','History',102),
+	(12345,'Shanker','Comp.Sci',32),
+	(1991,'Chelcy','History',80),
+	(23121,'Olpa','Finance',110),
+	(44553,'Enam','Physics',56),
+	(45678,'Peterl','Physics',46),
+	(54321,'Henrd','Comp.Sci',54),
+	(55739,'Snow','Music',38),
+	(70557,'Brown','Physics',0),
+	(76543,'Aoi','Comp.Sci',58),
+	(76653,'Tanaka','Elec.Eng',60),
+	(98765,'Brandit','Elec.Eng',98),
+	(98988,'Lui','Biology',120);
+
+
+INSERT INTO takes(ID ,course_id, sec_id ,semester, course_year ,grade) VALUES
+	(00128,'CS-101',1,'Fall',2009,'A'),
+	(00128,'CS-347',1,'Fall',2009,'A-'),
+	(00128,'CS-190',1,'Fall',2009,'C'),
+	(00128,'CS-315',2,'Spring',2009,'A'),
+	(00128,'CS-347',1,'Spring',2009,'A'),
+	(00128,'HIS-101',1,'Fall',2009,'A'),
+	(00128,'FIN-351',1,'Spring',2009,'B'),
+	(00128,'PHY-201',1,'Spring',2010,'C+'),
+	(00128,'CS-101',1,'Fall',2009,'B-'),
+	(00128,'CS-101',1,'Fall',2009,'F'),
+	(00128,'CS-101',1,'Spring',2010,'B+'),
+	(00128,'CS-1319',1,'Spring',2009,'B'),
+	(00128,'CS-190',2,'Fall',2009,'A-'),
+	(00128,'MU-190',1,'Spring',2010,'B+'),
+	(00128,'CS-199',1,'Spring',2009,'A-'),
+	(00128,'CS-101',2,'Fall',2010,'A'),
+	(00128,'EE-319',1,'Spring',2009,'A'),
+	(00128,'CS-181',1,'Spring',2009,'C'),
+	(00128,'CS-315',1,'Fall',2010,'C-'),
+	(00128,'BIO-101',1,'Summer',2009,'A'),
+	(00128,'BIO-301',1,'Summer',2010,null);
+
+
+INSERT INTO section(course_id, sec_id,semester, course_year,building, room_no,time_slot_id) VALUES
+	('CS-101',1,'Fall',2010,'Watson',1,1),
+	('BIO-315',1,'Fall',2009,'Taylor',3,3),
+	('PHY-102',2,'Spring',2009,'Packward',23,6),
+	('CS-324',1,'Fall',2010,'Painter',12,9),
+	('FIN-590',2,'Spring',2009,'Painter',2,2),
+	('FIN-120',3,'Summer',2010,'Watson',5,6),
+	('CS-101',1,'Summer',2010,'Taylor',11,7),
+	('BIO-320',3,'Fall',2009,'Taylor',13,4),
+	('PHY-120',2,'Spring',2009,'Packward',14,1),
+	('HIS-190',1,'Fall',2010,'Painter',21,8),
+	('CS-101',1,'Spring',2010,'Watson',17,8);
+
+INSERT INTO prereq (course_id, prereq_id) VALUES
+	('BIO-301', 'CS-190'),
+	('CS-347', 'BIO-101'),
+	('CS-347', 'CS-101');
