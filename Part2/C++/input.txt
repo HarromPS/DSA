@@ -1,9 +1,14 @@
-7 
+6 
 
-0 1 0 0 0 0 0
-1 0 1 0 0 0 0
-0 1 0 0 0 0 0 
-0 0 0 0 1 0 0 
-0 0 0 1 0 0 0 
-0 0 0 0 0 0 1 
-0 0 0 0 0 1 0 
+4
+john j1@com j2@com j3@com
+2
+john j4@com
+3
+raj r1@com r2@com
+3
+john j1@com j5@com
+3
+raj r2@com r3@com
+2
+mary m1@com
