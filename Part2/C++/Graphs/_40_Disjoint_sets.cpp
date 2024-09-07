@@ -71,7 +71,7 @@ public:
         int pu = findParent(u);
         int pv = findParent(v);
 
-        // if they have same parnent, just return 
+        // if they have same parent, just return 
         if(pu == pv) return;
 
         // else if check the rank 
