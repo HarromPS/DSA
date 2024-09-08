@@ -4,35 +4,44 @@ using namespace std;
 #define mod 1000000007
 
 /*
-Maximum Stone Removal
-
-Minimum Spanning Tree | Min cost to all nodes with n nodes and n-1 edges
 
 There are n stones at some integer coordinate points on a 2D plane. 
-Each coordinate point may have at most one stone.
+You are given a n,m which means the row and column of the 2D matrix and an array of size k denoting the number of operations. 
+Matrix elements is 0 if there is water or 1 if there is land.
+Originally, the 2D matrix is all 0 which means there is no land in the matrix.
+he array has k operator(s) and each operator has two integer A[i][0], A[i][1] means that you 
+can change the cell matrix[A[i][0]][A[i][1]] from sea to island. Return how many island are 
+there in the matrix after each operation.You need to return an array of size k.
 
-You need to remove some stones. 
+Note : An island means group of 1s such that they share a common side.
 
-A stone can be removed if it shares either the same row or 
-the same column as another stone that has not been removed.
+Input: n = 4
+m = 5
+k = 4
+A = {{1,1},{0,1},{3,3},{3,4}}
 
-Given an array stones of length n where stones[i] = [xi, yi] represents the location of the ith stone, 
-return the maximum possible number of stones that you can remove.
-
-Input:
-n=6
-[[0 0] ,[ 0 1], [1 0] ,[1 2] ,[2 1] ,[2 2]]
-
-Output:
-5
-
-Example:
-One way to remove 5 stones are
-1--[0,0]
-2--[1,0]
-3--[0,1]
-4--[2,1]
-5--[1,2]
+Output: 1 1 2 2
+Explanation:
+0.  00000
+    00000
+    00000
+    00000
+1.  00000
+    01000
+    00000
+    00000
+2.  01000
+    01000
+    00000
+    00000
+3.  01000
+    01000
+    00000
+    00010
+4.  01000
+    01000
+    00000
+    00011
 
 */
 
@@ -105,10 +114,47 @@ public:
         }
     }
 
-    int maxRemove(vector<vector<int>>& stones, int n) {
-       
-        // create 
-        return 0;
+    vector<int> numOfIslands(int n, int m, vector<vector<int>> &query) {
+        // create a visited array 
+        vector<vector<int>> visited(n,vector<int>(m,0));
+        int cnt=0;
+        vector<int> ans;
+
+        // iterate through each query 
+        for(auto it: query){
+            int row = it[0];
+            int col = it[1];
+            // if already visited -> just add its count 
+            if(visited[row][col]==1){
+                ans.push_back(cnt);
+                continue;
+            }
+            // else 
+            visited[row][col]=1;
+            cnt++;  // count it as an individual island
+
+            // check in 4 directions
+            int drow[]={-1,1,0,0};
+            int dcol[]={0,0,1,-1};
+            for(int l=0;l<4;l++){
+                int nrow=row+drow[l];
+                int ncol=col+dcol[l];
+                // boundaries
+                if(nrow>=0 && nrow<n && ncol>=0 && ncol<m){
+                    if(visited[nrow][ncol]==1){    // if there is any connected islands
+                        // check if they are not already connected 
+                        int node = row*m + col;
+                        int adjNode= nrow*m + ncol;
+                        if(findParent(node)!=findParent(adjNode)){
+                            cnt--;
+                            UnionByRank(node,adjNode);
+                        }
+                    }
+                }
+            }
+            ans.push_back(cnt);
+        }
+        return ans;
     }
 
 };
@@ -116,11 +162,12 @@ public:
 void solve(){
     int n;  // number of  
     int m;  // number of edges 
-    cin>>n>>m;
+    int numberOfQueries;
+    cin>>n>>m>>numberOfQueries;
 
     // Works but not for all the test cases -> Momory Limit Exceed in Leetcode and GFG
-    vector<vector<int>> stones;
-    for(int i=0;i<m;i++){
+    vector<vector<int>> query;
+    for(int i=0;i<numberOfQueries;i++){
         int u,v;
         cin>>u>>v;
 
@@ -128,40 +175,18 @@ void solve(){
         temp.push_back(u);
         temp.push_back(v);
 
-        stones.push_back(temp);
+        query.push_back(temp);
         temp.clear();
     }
 
-    // get the dimesions of the nodes 
-    int maxRow=0,maxCol=0;
-    for(auto it: stones){
-        maxRow = max(maxRow, it[0]);
-        maxCol = max(maxCol, it[1]);
-    }
+    // n*m nodes are there
+    DisjointSet s(n*m);
+    vector<int> ans=s.numOfIslands(n,m,query);
+    for(int i=0;i<ans.size();i++){
+        cout<<ans[i]<<" ";
+    }   
+    cout<<endl;
     
-    // create a disjoint set of maxRow and maxCol size
-    DisjointSet s(maxRow+maxCol+1);
-    unordered_map<int,int> stoneNode;   // map to nodes having stones 
-    for(auto it:stones){
-        int rowNode=it[0];
-        int colNode=it[1]+maxRow+1;
-        // union 
-        s.UnionByRank(rowNode,colNode);
-        stoneNode[rowNode]=1;
-        stoneNode[colNode]=1;
-    }
-
-    // iterate through map to get ultimate parents i.e number of components 
-    int numberOfComponents=0;
-    for(auto it: stoneNode){
-        if(s.findParent(it.first)==it.first){
-            numberOfComponents++;
-        }
-    }
-
-    // return n-numberOfComponents ;
-    cout<<n-numberOfComponents<<endl;
-   
 }
 
 
