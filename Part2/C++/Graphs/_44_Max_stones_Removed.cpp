@@ -4,8 +4,6 @@ using namespace std;
 #define mod 1000000007
 
 /*
-
-// Works but not for all the test cases
 Maximum Stone Removal
 
 Minimum Spanning Tree | Min cost to all nodes with n nodes and n-1 edges
@@ -35,6 +33,7 @@ One way to remove 5 stones are
 3--[0,1]
 4--[2,1]
 5--[1,2]
+
 */
 
 class DisjointSet
@@ -106,74 +105,24 @@ public:
         }
     }
 
-    void dfs(int i,int j,vector<vector<int>>& adj_matrix,vector<vector<int>>& visited,int maxNodes){
-        // mark the node as visited 
-        visited[i][j] = 1;
-
-        // call the dfs call from the node if in same row or column 
-        int drow[]={-1,1,0,0};
-        int dcol[]={0,0,-1,1};
-        
-        // check in the row 
-        for(int index=0;index<maxNodes;index++){
-            if(index!=i && adj_matrix[i][index]==1 && visited[i][index]==0){
-                dfs(i,index,adj_matrix,visited,maxNodes);
-            }
-        }
-
-        // check in the column 
-        for(int index=0;index<maxNodes;index++){
-            if(index!=i && adj_matrix[index][j]==1 && visited[index][j]==0){
-                dfs(index,j,adj_matrix,visited,maxNodes);
-            }
-        }
-
+    int maxRemove(vector<vector<int>>& stones, int n) {
+            return 0;
     }
-    int maxRemove(int maxNode,vector<vector<int>>& stones, int n) {
-        // Code here
-        int res=0;
-        vector<vector<int>> adj_matrix(maxNode,vector<int>(maxNode,0));
-        vector<vector<int>> visited(maxNode,vector<int>(maxNode,0));
 
-        for(int i=0;i<stones.size();i++){
-            int u = stones[i][0];
-            int v = stones[i][1];
-            adj_matrix[u][v]=1;
-        }
-        // search in all the components
-        for(int i=0;i<maxNode;i++){
-            for(int j=0;j<maxNode;j++){
-                if(adj_matrix[i][j]==1 && visited[i][j]==0){
-                    res++;
-                    dfs(i,j,adj_matrix,visited,maxNode);
-                }
-            }
-        }
-
-        for(int i=0;i<maxNode;i++){
-            for(int j=0;j<maxNode;j++){
-                cout<<visited[i][j]<<" ";
-            }
-            cout<<endl;
-        }
-        return (n-res);
-    }
 };
 
 void solve(){
     int n;  // number of  
     int m;  // number of edges 
     cin>>n>>m;
-    int maxNodes=0;
+
+    // Works but not for all the test cases -> Momory Limit Exceed in Leetcode and GFG
 
     DisjointSet s(n);
     vector<vector<int>> stones;
     for(int i=0;i<m;i++){
         int u,v;
         cin>>u>>v;
-
-        // get the max number of nodes 
-        maxNodes = max(u,max(v,maxNodes));
 
         vector<int> temp;
         temp.push_back(u);
@@ -182,7 +131,7 @@ void solve(){
         stones.push_back(temp);
         temp.clear();
     }
-    int res = s.maxRemove(maxNodes+1,stones,n);
+    int res = s.maxRemove(stones,n);
     cout<<res<<endl;
    
 }
@@ -209,4 +158,3 @@ int main()
 }
 
 
-    
