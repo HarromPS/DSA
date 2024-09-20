@@ -16,26 +16,46 @@ Explanation: The largest element of the given array is 90.
 
 class Solution {
 public:
+    // Brute Solution: TC-O(N logN), SC-O(1)  no extra space is used
+    int largest_Brute(vector<int>& arr){
+        int n=arr.size();
+        // if size is zero return -1
+        if(arr.size()==0) return -1;
+
+        int largestElement=0;
+
+        // sorting the array
+        sort(arr.begin(),arr.end());
+
+        // return last element
+        return arr[n-1];
+    }
+
+    // Optimized solution TC-O(N) SC-O(1)  no extra space is used
     int largest(vector<int> &arr) {
         // code here
         int largestElement=0;
+        int n = arr.size();
+        for(int i=0;i<n;i++){
+            if(largestElement<arr[i]) largestElement=arr[i];
+        }
         return largestElement;
     }
 };
 
 void solve(){
-    int n;  // number of rows
-    int m;  // number of cols 
-    cin>>n>>m;
+    int n;  // array size
+    cin>>n;
 
-    vector<vector<int>> grid(n,vector<int>(m,0));
+    vector<int> arr(n,0);
     for(int i=0;i<n;i++){
-        for(int j=0;j<m;j++){
-            int ip;
-            cin>>ip;
-            grid[i][j]=ip;
-        }
+        cin>>arr[i];
     }   
+    Solution s;
+    int res=s.largest_Brute(arr);
+    cout<<"Brute: "<<res<<endl;
+    res=s.largest(arr);
+    cout<<"Optimal: "<<res<<endl;
     
 }
 
