@@ -30,9 +30,6 @@ public class _4_All_Permutations_without_space {
         }
     }
 
-    public static void swap(int a,int b){
-        
-    }
 
     public static void main(String[] args) {
         int array[]={1,2,3};
