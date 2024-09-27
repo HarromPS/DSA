@@ -34,10 +34,24 @@ public:
     // Brute force: 
     // generate all premutations 
 
-    void generatePermutations(vector<int> arr, vector<int>& ds,vector<int> mp,int n){
+    void generatePermutations(vector<int> arr, vector<int>& ds,vector<int> mp,int n,vector<int>& a,int *x){
         if(ds.size() == n){
-            for(int i=0;i<ds.size();i++) cout<<ds[i]<<" ";
-            cout<<endl;
+            if(*x==1){
+                for(auto it: ds) cout<<it<<" ";
+                cout<<endl;
+                *x=0;
+                return;
+            }
+            int flag=1;
+            for(int i=0;i<ds.size();i++){
+                if(ds[i]!=a[i]){
+                    flag=0;
+                    break;
+                }
+            }
+            if(flag==1){
+                *x=1;
+            }
             return;
         }
 
@@ -48,7 +62,7 @@ public:
                 mp[i]=1;    // set 
 
                 // function call 
-                generatePermutations(arr,ds,mp,n);
+                generatePermutations(arr,ds,mp,n,a,x);
 
                 ds.pop_back();
                 mp[i]=-1;   // unset
@@ -82,7 +96,8 @@ public:
         sort(arr.begin(),arr.end());
         vector<int> mp(n,-1);
         vector<int> ds;
-        generatePermutations(arr,ds,mp,n);
+        int x=0;
+        generatePermutations(arr,ds,mp,n,a,&x);
         // generatePermutationsSwap(0,a);   // not in sorted order 
     }
 
