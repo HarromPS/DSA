@@ -1,1 +1,4 @@
-Optimal 4:1
+Brute: 
+17 5 2 
+Optimal: 
+17 5 2 
