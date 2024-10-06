@@ -105,6 +105,35 @@ public:
         }
     }
 
+    void swap(int i,int j,vector<int>& arr){
+        int temp=arr[i];
+        arr[i]=arr[j];
+        arr[j]=temp;
+    }
+    
+    void movesZerosEndOptimal_3(vector<int>& arr){
+        // code here
+        int i=0;
+        int j=0;
+        int n=arr.size();
+        while(j<n){
+            if(arr[i]!=0 && arr[j]!=0){
+                i++;
+                j++;
+                continue;
+            }
+            if(arr[i]==0 && arr[j]==0){
+                while(j<n && arr[j]==0) j++;
+                if(j<n) {
+                    swap(i,j,arr);
+                    i++;
+                }
+            }
+        }
+    }
+
+
+
 };
 
 void solve(){

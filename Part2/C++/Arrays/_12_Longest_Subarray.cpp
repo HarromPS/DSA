@@ -85,7 +85,7 @@ public:
                 len=max(len, right-left+1);
             }
             right++;
-            if(right,n){
+            if(right<n){
                 sum+=arr[right];
             }
         }

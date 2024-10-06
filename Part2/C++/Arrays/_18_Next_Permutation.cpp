@@ -89,21 +89,59 @@ public:
         }
     }
 
-    void RearrangeElements(vector<int>& a){
-        int n =a.size();
-        vector<int> arr;
-        for(auto it: a) arr.push_back(it);
-        sort(arr.begin(),arr.end());
-        vector<int> mp(n,-1);
-        vector<int> ds;
-        int x=0;
-        generatePermutations(arr,ds,mp,n,a,&x);
-        // generatePermutationsSwap(0,a);   // not in sorted order 
+    void generateNextPermutationBetter(vector<int> a){
+        next_permutation(a.begin(),a.end());
+        for(auto it:a) cout<<it<<" ";
+        cout<<endl; 
+    }
+
+    void Swap(int i,int j,vector<int>& arr){
+        int temp=arr[i];
+        arr[i]=arr[j];
+        arr[j]=temp;
+    }
+
+    void reverse(int start,int end,vector<int>& arr){
+        while(start<end){
+            int temp = arr[start];
+            arr[start]=arr[end];
+            arr[end]=temp;
+            start++;
+            end--;
+        }
     }
 
     // Optimal Solution:TC-O(n), SC-O(1)
-    void RearrangeElementsOptimal(vector<int>& arr){
-        
+    void generateNextPermutationOptimal(vector<int>& arr){
+        // 1. find longest prefix match i.e find a dip 
+        int n = arr.size();
+        int ind=-1; // no dip till now 
+        for(int i=n-2;i>=0;i--){
+            if(arr[i]<arr[i+1]){
+                ind=i;
+                break;
+            }
+        }
+
+        // if ind=-1 means no dip
+        if(ind==-1){
+            // return 1st order 
+            reverse(0,n-1,arr);
+            return;
+        }
+
+        // 2. find > 1, but the smallest
+        for(int i=n-1;i>=ind;i--){
+            if(arr[i] > arr[ind]){
+                // swap
+                Swap(i,ind,arr);
+                break;
+            }
+        }
+
+        // 3. try to place rest in sorted order
+        // as it was always in increasing order, even after swap, just reverse it
+        reverse(ind+1,n-1,arr);
     }
 };
 
@@ -118,9 +156,12 @@ void solve(){
 
     Solution s;
     cout<<"Brute: "<<endl;
-    s.RearrangeElements(arr);
+    s.generateNextPermutationBetter(arr);
+    
     cout<<"Optimal: "<<endl;
-    s.RearrangeElementsOptimal(arr);
+    s.generateNextPermutationOptimal(arr);
+    for(auto it:arr) cout<<it<<" ";
+    cout<<endl;
 
 }
 
