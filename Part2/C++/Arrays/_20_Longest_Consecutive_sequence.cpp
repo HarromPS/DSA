@@ -4,15 +4,16 @@ using namespace std;
 #define mod 1000000007
 
 /*
-Given an array arr of n positive integers, 
-your task is to find all the leaders in the array. 
-An element of the array is considered a leader if it is greater than all the elements on its right side 
-or if it is equal to the maximum element on its right side. 
-The rightmost element is always a leader.
 
-Input: n = 6, arr[] = {16,17,4,3,5,2}
-Output: 17 5 2
-Explanation: Note that there is nothing greater on the right side of 17, 5 and, 2.
+Given an unsorted array of integers nums, return the length of the longest consecutive elements sequence.
+
+You must write an algorithm that runs in O(n) time.
+Input: nums = [100,4,200,1,3,2]
+Output: 4
+Explanation: The longest consecutive elements sequence is [1, 2, 3, 4]. Therefore its length is 4.
+
+Input: nums = [0,3,7,2,5,8,4,6,0,1]
+Output: 9
 
 */
 
@@ -34,15 +35,75 @@ public:
         arr[j]=temp;
     }
 
-    // Brute force Solution:TC-O(n^2), SC-O(n)
-    void longestConsecutiveSequence(vector<int> arr){
-              
+    // Brute force Solution:TC-O(nlog n + n), SC-O(n)
+    void longestConsecutiveSequenceBrute(vector<int> arr){
+        // finding all consecutive sequence 
+        int len=1;
+        int n=arr.size();
+        for(int i=0;i<n;i++){
+            int x=arr[i];
+            int cnt=1;
+            for(int j=0;j<n;j++){
+                if(arr[j]==x+1){
+                    x=x+1;
+                    cnt+=1;
+                    j=-1;
+                    len=max(len,cnt);
+                }
+            }
+        }
+        cout<<len<<endl;
+    }
+
+    void longestConsecutiveSequenceBetter(vector<int> arr){
+        // sort the given array
+        int n=arr.size();
+        sort(arr.begin(),arr.end());
+        
+        // traverse and find longest consecutive sequence
+        int len=1;
+        int lastSmaller=arr[0];
+        int consecutive_count=1;     // at least one element is in consectutive manner 
+        for(int i=1;i<n;i++){
+            // if consecutive 
+            if(arr[i]==lastSmaller+1){
+                lastSmaller=arr[i];
+                consecutive_count++;
+                len=max(len,consecutive_count);
+            }
+            else if(arr[i]==lastSmaller){
+                continue;
+            }
+            else{
+                consecutive_count=1;
+                lastSmaller=arr[i];
+            }
+        }
+        cout<<len<<endl;
     }
 
     // Optimal Solution:TC-O(n), SC-O(n)
-    // 16, 17, 4, 3, 5, 2
-    void longestConsecutiveSequenceOptimal(vector<int>& arr){
-       
+    void longestConsecutiveSequenceOptimal(vector<int> arr){
+       // get a set 
+       unordered_set<int> st;
+       int n=arr.size();
+       for(auto it:arr) st.emplace(it);
+
+        // search for the starting point of a consecutive sequence 
+        int len=1;
+        for(auto it:st){
+            int x = it-1;
+            if(st.find(x)==st.end()){   // if no one before, means it is a starting one
+                int cnt=1;
+                x=it;
+                while(st.find(x+1)!=st.end()){
+                    cnt++;
+                    x=x+1;
+                }
+                len=max(len,cnt);
+            }
+        }
+        cout<<len<<endl;
     }
 };
 
@@ -57,7 +118,10 @@ void solve(){
 
     Solution s;
     cout<<"Brute: "<<endl;
-    s.longestConsecutiveSequence(arr);
+    s.longestConsecutiveSequenceBrute(arr);
+    
+    cout<<"Better: "<<endl;
+    s.longestConsecutiveSequenceBetter(arr);
     
     cout<<"Optimal: "<<endl;
     s.longestConsecutiveSequenceOptimal(arr);
