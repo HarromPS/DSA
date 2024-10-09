@@ -45,7 +45,7 @@ public:
 
         // go dfs 
         if(direction==1){   // go right 
-            if(j+1<n && visited[i][j+1]==0){
+            if(j+1<m && visited[i][j+1]==0){
                 dfs(i,j+1,1,matrix,visited,ans,n,m);
             }
             else{
@@ -60,25 +60,25 @@ public:
                 dfs(i,j-1,3,matrix,visited,ans,n,m);
             }
         }
-        if(direction==1){   // go left 
+        if(direction==3){   // go left 
             if(j-1>=0 && visited[i][j-1]==0){
                 dfs(i,j-1,3,matrix,visited,ans,n,m);
             }
             else{
-                dfs(i+1,j,2,matrix,visited,ans,n,m);
+                dfs(i-1,j,4,matrix,visited,ans,n,m);
             }
         }
-        if(direction==1){   // go up 
-            if(j+1<n && visited[i][j+1]==0){
-                dfs(i,j+1,1,matrix,visited,ans,n,m);
+        if(direction==4){   // go up 
+            if(i-1>=0 && visited[i-1][j]==0){
+                dfs(i-1,j,4,matrix,visited,ans,n,m);
             }
             else{
-                dfs(i+1,j,2,matrix,visited,ans,n,m);
+                dfs(i,j+1,1,matrix,visited,ans,n,m);
             }
         }
     }
 
-    // Brute force Solution:TC-O(n*m), SC-O(n*m)
+    // Brute force Solution:TC-O(n*m), SC-O(2(n*m))
     void spiralMatrixBrute(vector<vector<int>> matrix){
         vector<int> ans;
         int n=matrix.size();
@@ -92,27 +92,42 @@ public:
     
     // Optimal TC:O(N*M) SC:O(N*M) + O(1)
     void spiralMatrixOptimal(vector<vector<int>>& matrix){
-        // using matrix operations 
-        // transpose of matrix Aij=Aji
+        // doing it traditionally 
         int n=matrix.size();
         int m=matrix[0].size();
-        for(int i=0;i<n-1;i++){
-            for(int j=i+1;j<n;j++){
-                Swap(i,j,matrix);
+        int left=0, top=0;
+        int right=m-1,bottom=n-1;
+        vector<int> ans;
+
+        while(left<=right && top<=bottom){
+            // left to right , top is same 
+            for(int i=left;i<=right;i++){
+                ans.push_back(matrix[top][i]);
+            }
+            top++;
+            // top to bottom, right is same 
+            for(int i=top;i<=bottom;i++){
+                ans.push_back(matrix[i][right]);
+            }
+            right--;
+            if(top<=bottom){
+                // right to left, bottom is same 
+                for(int i=right;i>=left;i--){
+                    ans.push_back(matrix[bottom][i]);
+                }
+                bottom--;
+            }
+            if(left<=right){
+                // bottom to top, left is same 
+                for(int i=bottom;i>=top;i--){
+                    ans.push_back(matrix[i][left]);
+                }
+                left++;
             }
         }
 
-        // reverse every row 
-        for(int i=0;i<n;i++){
-            reverse(i,n-1,matrix);
-        }
-
-        for(int i=0;i<n;i++){
-            for(int j=0;j<n;j++){
-                cout<<matrix[i][j]<<" ";
-            }
-            cout<<endl;
-        }
+        for(auto it:ans) cout<<it<<" ";
+        cout<<endl;
     }
 
 };
