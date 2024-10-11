@@ -4,32 +4,35 @@ using namespace std;
 #define mod 1000000007
 
 /*
-Problem statement
+Given an array having both positive and negative integers. 
 
-You are given a sorted array 'arr' of positive integers of size 'n'.
 
-It contains each number exactly twice except for one number, which occurs exactly once.
-Find the number that occurs exactly once.
+Input: arr[] = {15,-2,2,-8,1,7,10,23}, n = 8
+Output: 5
+Explanation: The largest subarray with sum 0 is -2 2 -8 1 7.
 
-Example :
-Input: ‘arr’ = {1, 1, 2, 3, 3, 4, 4}.
-Output: 2
-Explanation: 1, 3, and 4 occur exactly twice. 2 occurs exactly once. Hence the answer is 2.
+Input: arr[] = {2,10,4}, n = 3
+Output: 0
+Explanation: There is no subarray with 0 sum.
+
+Input: arr[] = {1, 0, -4, 3, 1, 0}, n = 6
+Output: 5
+Explanation: The subarray is 0 -4 3 1 0.The task is to compute the length of the largest subarray with sum 0.
 */
 
 class Solution {
 public:
     // Brute Solution: TC-O(n^2), SC-O(1)
-    void longestSubarraySum(vector<int> a,int k){
+    void longestSubarrayZeroSum(vector<int> a,int k){
         // all possible subarrays 
         int len=0;
         int n = a.size();
         for(int i=0;i<n;i++){
             int sum=0;
             for(int j=i;j<n;j++){
-                sum+=a[j];
+                sum=sum+a[j];
                 if(sum==k){
-                    len=max(len, j-i+1);
+                    len=max(len, (j-i)+1);
                 }
             }
         }
@@ -38,7 +41,7 @@ public:
 
     // for positive and ones and negatives max optimization
     // Better Solution: TC-O(n), SC-O(1)  
-    void longestSubarraySumBetter(vector<int> arr,int k){
+    void longestSubarrayZeroSumBetter(vector<int> arr,int k){
         // using hasing and prefix sum 
         int prefixSum=0;
         int n = arr.size();
@@ -66,32 +69,6 @@ public:
         }
         cout<<len<<endl;
     }
-
-    // max optimization till positives and zeros
-    // Optimal Solution:TC-O(n), SC-O(1)
-    void longestSubarraySumOptimal(vector<int> arr,int k){
-        int right = 0;
-        int left = 0;
-        int n = arr.size();
-        int len = 0;
-        int sum = arr[0];
-        while(left<n && right<n){
-            // if sum already > k
-            while(sum>k){
-                sum-=arr[left];
-                left++;
-            }
-            if(sum==k){
-                len=max(len, right-left+1);
-            }
-            right++;
-            if(right<n){
-                sum+=arr[right];
-            }
-        }
-        cout<<len<<endl;
-    }
-
 };
 
 void solve(){
@@ -101,17 +78,16 @@ void solve(){
 
     vector<int> arr(n,0);
     for(int i=0;i<n;i++){
-        cin>>arr[i];
+        int ip;
+        cin>>ip;
+        arr[i]=ip;
     }   
 
     Solution s;
     cout<<"Brute: "<<endl;
-    s.longestSubarraySum(arr,k);
+    s.longestSubarrayZeroSum(arr,k);
     cout<<"Better: "<<endl;
-    s.longestSubarraySumBetter(arr,k);
-    cout<<"Optimal: "<<endl;
-    s.longestSubarraySumOptimal(arr,k);
-    
+    s.longestSubarrayZeroSumBetter(arr,k);    
 }
 
 
