@@ -1,6 +1,4 @@
-Brute: 
-1 6
-8 11
-15 18
-
-Better: 
+Brute 1: 
+15
+Optimal 2: 
+37
