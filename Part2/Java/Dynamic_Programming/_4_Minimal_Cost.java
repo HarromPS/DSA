@@ -215,9 +215,7 @@ public class _4_Minimal_Cost {
         int res = minimalCost(0,n-1, new ArrayList<>(dp), heights,k);
         System.out.println("DP Memoization: "+res);
         
-        System.out.println("DP Tabulation: "+minimalCostTabulation(n,heights,k));
-        
-        
+        System.out.println("DP Tabulation: "+minimalCostTabulation(n,heights,k));        
     }
 
     public static void main(String[] args) {

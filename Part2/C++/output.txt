@@ -1,4 +1,0 @@
-Brute 1: 
-15
-Optimal 2: 
-37
