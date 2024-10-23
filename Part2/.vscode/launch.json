@@ -3,5 +3,13 @@
     // Hover to view descriptions of existing attributes.
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
-    "configurations": []
+    "configurations": [
+        {
+            "type": "java",
+            "name": "_42_Longest_String_Chain",
+            "request": "launch",
+            "mainClass": "Java.Dynamic_Programming._42_Longest_String_Chain",
+            "projectName": "Part2_8c187424"
+        }
+    ]
 }

@@ -4,17 +4,41 @@ using namespace std;
 #define mod 1000000007
 
 /*
-
+Tree - non linear data structure
 */
 
-class Solution {
+struct Node{
+    int data;
+    struct Node* left;
+    struct Node* right;
+    Node(){}
+    Node(int val){
+        data = val;
+        left = nullptr;
+        right = nullptr;
+    }
+}typedef Node;
+
+class Solution{
 public:
-    
+    void printTree(Node * root){
+        if(root==nullptr) return;
+        cout<<root->data<<" ";
+        printTree(root->left);
+        printTree(root->right);
+    }
 };
 
 void solve(){
-    Solution s;
+    Node* root;
+    root->data = 1;
+    root->left = new Node(2);
+    root->right = new Node(3);
 
+    root->left->right = new Node(4);
+
+    Solution s;
+    s.printTree(root);
 }
 
 
