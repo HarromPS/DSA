@@ -66,49 +66,6 @@ public class _42_Longest_String_Chain {
     Output: 4
     Explanation: One of the longest word chains is ["a","ba","bda","bdca"].
      */
-
-    // Brute force: Recursive ways
-    // T.C: O(N^2), S.C:(N)
-    public static void Longest_String_Chain_Recursion(int index, int prevMaxIndex_j, int[] arr, int n) {
-        
-        
-    }
-
-    // Brute force: Recursive ways
-    // T.C: O(N^2), S.C:(N)
-    public static void Longest_String_Chain_Recursion_Shifting_Index(int index, int prevMaxIndex_j, int[] arr,
-            int n) {
-       
-    }
-
-    // DP Memoization
-    // T.C: O(N), S.C:(N+N)
-    public static void Longest_String_Chain_Memoization(int index, int prevMaxIndex_j, int[] arr, int n,
-            int dp[][]) {
-    
-    }
-
-    public static void Longest_String_Chain_Memoization_Shifting_Index(int index, int prevMaxIndex_j, int[] arr,
-            int n, int dp[][]) {
-    }
-
-    // DP Tabulation
-    // T.C: O(N), S.C:(N+N)
-    public static void Longest_String_Chain_Tabulation(int[] arr, int n) {
-
-    }
-
-    // DP Optimized
-    public static void Longest_String_Chain_DPOptimized(int[] arr, int n) {
-
-    }
-
-    // DP Optimized
-    // T.C: O(N), O(1)
-    public static void Longest_String_Chain_DPOptimized_1(int[] arr, int n) {
-
-    }
-
     public static boolean isPredecessor(String s1,String s2){       
         int n = s1.length();
         int m = s2.length();
@@ -160,10 +117,6 @@ public class _42_Longest_String_Chain {
         return ans;
     }
 
-    public static void Longest_String_Chain_DPOptimized_Binary_Search(int[] arr, int n) {
-       
-    }
-
     public static void solve(FastReader sc) {
         int n = sc.nextInt();
 
@@ -172,36 +125,8 @@ public class _42_Longest_String_Chain {
             arr[i] = sc.nextLine();
         }
 
-        // int ans = Longest_String_Chain_Recursion(n - 1, n, arr, n);
-        // System.out.println("Brute Recursion:" + ans);
-
-        // int dp[][] = new int[n][n + 1];
-        // for (int rows[] : dp)
-        //     Arrays.fill(rows, -1);
-
-        // ans = Longest_String_Chain_Memoization(n - 1, n, arr, n, dp);
-        // System.out.println("DP Memoization:" + ans);
-
-        // ans = Longest_String_Chain_Recursion_Shifting_Index(n - 1, n, arr, n);
-        // System.out.println("Brute Recursion Shifting_Index:" + ans);
-
-        // ans = Longest_String_Chain_Memoization_Shifting_Index(n - 1, n, arr, n, dp);
-        // System.out.println("DP Memoization Shifting_Index:" + ans);
-
-        // ans = Longest_String_Chain_Tabulation(arr, n);
-        // System.out.println("DP Tabulation:" + ans);
-
-        // ans = Longest_String_Chain_DPOptimized(arr, n);
-        // System.out.println("DP DPOptimized:" + ans);
-
-        // ans = Longest_String_Chain_DPOptimized_1(arr, n);
-        // System.out.println("DP DPOptimized 1:" + ans);
-
         int ans = Longest_String_Chain_DPOptimized_2(arr);
         System.out.println("DP DPOptimized 2:" + ans);
-
-        // ans = Longest_String_Chain_DPOptimized_Binary_Search(arr, n);
-        // System.out.println("DP DPOptimized Binary Search 3:" + ans);
     }
 
     public static void main(String[] args) {

@@ -21,14 +21,32 @@ struct Node{
 
 class Solution{
 public:
-     // Tree Traversals
-    void printTree(Node * root){
+    // Tree Traversals
+    // TC:O(N) SC:O(N)    
+  
+    void PreOrderTraversal(Node* root){
         if(root==nullptr) return;
-        cout<<root->data<<" ";
-        printTree(root->left);
-        printTree(root->right);
+
+        cout<<(root->data)<<" ";
+        PreOrderTraversal(root->left);
+        PreOrderTraversal(root->right);
     }
 
+    void InOrderTraversal(Node* root){
+        if(root==nullptr) return;
+
+        InOrderTraversal(root->left);
+        cout<<(root->data)<<" ";
+        InOrderTraversal(root->right);
+    }
+
+    void PostOrderTraversal(Node* root){
+        if(root==nullptr) return;
+
+        PostOrderTraversal(root->left);
+        PostOrderTraversal(root->right);
+        cout<<(root->data)<<" ";
+    }
 };
 /*
         1
@@ -47,7 +65,12 @@ void solve(){
     root->left->right = new Node(4);
 
     Solution s;
-    s.printTree(root);
+    
+    s.PreOrderTraversal(root);
+    cout<<endl;
+    s.InOrderTraversal(root);
+    cout<<endl;
+    s.PostOrderTraversal(root);
 }
 
 

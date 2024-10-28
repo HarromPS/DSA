@@ -33,5 +33,6 @@
         "variant": "cpp",
         "vector": "cpp"
     },
+    "java.debug.settings.onBuildFailureProceed": true,
     
 }

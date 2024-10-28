@@ -3,19 +3,19 @@ package Java.Tree;
 import java.io.*;
 import java.util.*;
 
-class TreeNode_0_{
+class TreeNode_2_{
     public int data;
-    public TreeNode_0_ left;
-    public TreeNode_0_ right;
-    public TreeNode_0_(){}
-    public TreeNode_0_(int val){
+    public TreeNode_2_ left;
+    public TreeNode_2_ right;
+    public TreeNode_2_(){}
+    public TreeNode_2_(int val){
         this.data=val;
         this.left=null;
         this.right=null;
     }
 }
 
-public class _0_Tree_Representation {
+public class _2_LevelOrder {
     static class FastReader {
         BufferedReader br;
         StringTokenizer st;
@@ -66,19 +66,46 @@ public class _0_Tree_Representation {
     Tree - non linear data structure
     */
 
-    public static void printTree(TreeNode_0_ root){
-        if(root==null) return;
-        System.out.print(root.data+" ");
-        printTree(root.left);
-        printTree(root.right);
+
+    // Tree Traversals
+
+    // TC:O(N) SC:O(N) auxillary space of tree
+    public static void levelOrderTraversal(TreeNode_2_ root){
+        ArrayList<ArrayList<Integer>> ans=new ArrayList<>();
+        Queue<TreeNode_2_> q=new LinkedList<TreeNode_2_>();
+
+        // initially add root to queue
+        q.add(root);
+        while(!q.isEmpty()){
+            // get all the nodes out 
+            ArrayList<Integer> level=new ArrayList<>();
+            int n=q.size();
+            for(int i=0;i<n;i++){
+                if(q.peek().left!=null) q.add(q.peek().left);
+                if(q.peek().right!=null) q.add(q.peek().right);
+                
+                level.add(q.poll().data);
+            }
+            // finally add to the answer 
+            ans.add(level);
+        }
+
+        for(int i=0;i<ans.size();i++){
+            for(int j=0;j<ans.get(i).size();j++){
+                System.out.print(ans.get(i).get(j)+" ");
+            }
+            System.out.println();
+        }
     }
 
+
     public static void solve(FastReader sc) {
-        TreeNode_0_ root = new TreeNode_0_(1);
-        root.left = new TreeNode_0_(2);
-        root.right = new TreeNode_0_(3);
-        root.left.right = new TreeNode_0_(5);
-        printTree(root);
+        TreeNode_2_ root = new TreeNode_2_(1);
+        root.left = new TreeNode_2_(2);
+        root.right = new TreeNode_2_(3);
+        root.left.right = new TreeNode_2_(5);
+
+        levelOrderTraversal(root);
     }
 
 

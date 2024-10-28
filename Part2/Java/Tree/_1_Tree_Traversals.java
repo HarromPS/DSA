@@ -3,19 +3,19 @@ package Java.Tree;
 import java.io.*;
 import java.util.*;
 
-class TreeNode_0_{
+class TreeNode_1_{
     public int data;
-    public TreeNode_0_ left;
-    public TreeNode_0_ right;
-    public TreeNode_0_(){}
-    public TreeNode_0_(int val){
+    public TreeNode_1_ left;
+    public TreeNode_1_ right;
+    public TreeNode_1_(){}
+    public TreeNode_1_(int val){
         this.data=val;
         this.left=null;
         this.right=null;
     }
 }
 
-public class _0_Tree_Representation {
+public class _1_Tree_Traversals {
     static class FastReader {
         BufferedReader br;
         StringTokenizer st;
@@ -66,19 +66,45 @@ public class _0_Tree_Representation {
     Tree - non linear data structure
     */
 
-    public static void printTree(TreeNode_0_ root){
+
+    // Tree Traversals
+
+    // TC:O(N) SC:O(N) auxillary space of tree
+    public static void PreOrderTraversal(TreeNode_1_ root){
         if(root==null) return;
+
         System.out.print(root.data+" ");
-        printTree(root.left);
-        printTree(root.right);
+        PreOrderTraversal(root.left);
+        PreOrderTraversal(root.right);
+    }
+
+    public static void InOrderTraversal(TreeNode_1_ root){
+        if(root==null) return;
+
+        InOrderTraversal(root.left);
+        System.out.print(root.data+" ");
+        InOrderTraversal(root.right);
+    }
+
+    public static void PostOrderTraversal(TreeNode_1_ root){
+        if(root==null) return;
+
+        PostOrderTraversal(root.left);
+        PostOrderTraversal(root.right);
+        System.out.print(root.data+" ");
     }
 
     public static void solve(FastReader sc) {
-        TreeNode_0_ root = new TreeNode_0_(1);
-        root.left = new TreeNode_0_(2);
-        root.right = new TreeNode_0_(3);
-        root.left.right = new TreeNode_0_(5);
-        printTree(root);
+        TreeNode_1_ root = new TreeNode_1_(1);
+        root.left = new TreeNode_1_(2);
+        root.right = new TreeNode_1_(3);
+        root.left.right = new TreeNode_1_(5);
+
+        PreOrderTraversal(root);
+        System.out.println();
+        InOrderTraversal(root);
+        System.out.println();
+        PostOrderTraversal(root);
     }
 
 

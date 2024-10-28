@@ -3,19 +3,19 @@ package Java.Tree;
 import java.io.*;
 import java.util.*;
 
-class TreeNode_0_{
+class TreeNode_3_{
     public int data;
-    public TreeNode_0_ left;
-    public TreeNode_0_ right;
-    public TreeNode_0_(){}
-    public TreeNode_0_(int val){
+    public TreeNode_3_ left;
+    public TreeNode_3_ right;
+    public TreeNode_3_(){}
+    public TreeNode_3_(int val){
         this.data=val;
         this.left=null;
         this.right=null;
     }
 }
 
-public class _0_Tree_Representation {
+public class _3_Iterative_Preorder {
     static class FastReader {
         BufferedReader br;
         StringTokenizer st;
@@ -66,19 +66,48 @@ public class _0_Tree_Representation {
     Tree - non linear data structure
     */
 
-    public static void printTree(TreeNode_0_ root){
-        if(root==null) return;
-        System.out.print(root.data+" ");
-        printTree(root.left);
-        printTree(root.right);
+
+    // Tree Traversals
+
+    // TC:O(N) SC:O(N) auxillary space of tree
+    public static void IterativePreorderTraversal(TreeNode_3_ root){
+        ArrayList<Integer> preorder = new ArrayList<>();
+        Stack<TreeNode_3_> st=new Stack<TreeNode_3_>();
+        st.push(root);
+
+        while(!st.isEmpty()){
+            TreeNode_3_ n = st.peek();
+            st.pop();
+
+            if(n.right != null) st.push(n.right);
+            if(n.left != null ) st.push(n.left);
+            preorder.add(n.data);
+        }
+        
+        for(int i=0;i<preorder.size();i++){
+            System.out.print(preorder.get(i)+" ");
+        }
     }
 
     public static void solve(FastReader sc) {
-        TreeNode_0_ root = new TreeNode_0_(1);
-        root.left = new TreeNode_0_(2);
-        root.right = new TreeNode_0_(3);
-        root.left.right = new TreeNode_0_(5);
-        printTree(root);
+        TreeNode_3_ root = new TreeNode_3_(1);
+        TreeNode_3_ two = new TreeNode_3_(2);
+        TreeNode_3_ three = new TreeNode_3_(3);
+        TreeNode_3_ four = new TreeNode_3_(4);
+        TreeNode_3_ five = new TreeNode_3_(5);
+        TreeNode_3_ six = new TreeNode_3_(6);
+        TreeNode_3_ seven = new TreeNode_3_(7);
+
+        root.left = two;
+        root.right = five;
+
+        two.left=three;
+        two.right=four;
+
+        five.left=six;
+        five.right=seven;
+
+        IterativePreorderTraversal(root);
     }
 
 

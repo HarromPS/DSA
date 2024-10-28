@@ -6,6 +6,55 @@
     "configurations": [
         {
             "type": "java",
+            "name": "_6_All_traversals",
+            "request": "launch",
+            "mainClass": "Java.Tree._6_All_traversals",
+            "projectName": "Part2_8c187424"
+        },
+        {
+            "type": "java",
+            "name": "_5_Iterative_Inorder",
+            "request": "launch",
+            "mainClass": "Java.Tree._5_Iterative_Inorder",
+            "projectName": "Part2_8c187424"
+        },
+        {
+            "type": "java",
+            "name": "_4_Iterative_PostOrder",
+            "request": "launch",
+            "mainClass": "Java.Tree._4_Iterative_PostOrder",
+            "projectName": "Part2_8c187424"
+        },
+        {
+            "type": "java",
+            "name": "_3_Iterative_Preorder",
+            "request": "launch",
+            "mainClass": "Java.Tree._3_Iterative_Preorder",
+            "projectName": "Part2_8c187424"
+        },
+        {
+            "type": "java",
+            "name": "_2_LevelOrder",
+            "request": "launch",
+            "mainClass": "Java.Tree._2_LevelOrder",
+            "projectName": "Part2_8c187424"
+        },
+        {
+            "type": "java",
+            "name": "_1_Tree_Traversals",
+            "request": "launch",
+            "mainClass": "Java.Tree._1_Tree_Traversals",
+            "projectName": "Part2_8c187424"
+        },
+        {
+            "type": "java",
+            "name": "_0_Tree_Representation",
+            "request": "launch",
+            "mainClass": "Java.Tree._0_Tree_Representation",
+            "projectName": "Part2_8c187424"
+        },
+        {
+            "type": "java",
             "name": "_42_Longest_String_Chain",
             "request": "launch",
             "mainClass": "Java.Dynamic_Programming._42_Longest_String_Chain",
