@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "_7_Vertical_Order",
+            "request": "launch",
+            "mainClass": "Java.Tree._7_Vertical_Order",
+            "projectName": "Part2_8c187424"
+        },
+        {
+            "type": "java",
             "name": "_6_All_traversals",
             "request": "launch",
             "mainClass": "Java.Tree._6_All_traversals",
