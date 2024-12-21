@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cstdio>
+#include <cstdlib>
 using namespace std;
 
 // AVL Trees -> height balancing trees
@@ -82,7 +83,7 @@ public:
         {
             node->left = insert(node->left, val);
         }
-        else if (val>node->data)
+        else if (val > node->data)
         {
             node->right = insert(node->right, val);
         }
@@ -132,12 +133,12 @@ public:
 int main()
 {
     class Node *head = NULL;
-    head=head->insert(head, 1);
-    head=head->insert(head, 2);
-    head=head->insert(head, 4);
-    head=head->insert(head, 5);
-    head=head->insert(head, 6);
-    head=head->insert(head, 3);
+    head = head->insert(head, 1);
+    head = head->insert(head, 2);
+    head = head->insert(head, 4);
+    head = head->insert(head, 5);
+    head = head->insert(head, 6);
+    head = head->insert(head, 3);
     head->inOrder(head);
 
     return 0;

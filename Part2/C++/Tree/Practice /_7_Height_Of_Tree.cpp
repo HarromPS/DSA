@@ -21,56 +21,66 @@ struct Node{
 
 class Solution{
 public:
-    // using recursive solutions
-    // TC:O(N) SC:O(height)
-    int heightOfTreeRecursive(Node* root){
-        if(root==nullptr) return 0;
 
-        int leftHeight = heightOfTreeRecursive(root->left);
-        int rightHeight = heightOfTreeRecursive(root->right);
-
-        return (1 + max(leftHeight, rightHeight));    // 1 for current node
-    }
-    
-    int heightOfLevelOrder(Node* root){
-        // if empty tree
+    // TC:O(n) SC:O(n) + O(n)
+    int MaxDepth_Height_Tree_recursive(Node* root){
+        // recursively find depth of tree 
+        // base condition
         if(root==nullptr){
             return 0;
         }
-        int height=1;   // so at least height is 1
 
+        // recursive function calls 
+        int left = MaxDepth_Height_Tree_recursive(root->left);
+        int right = MaxDepth_Height_Tree_recursive(root->right);
+
+        return 1 + max(left,right);
+    }
+
+    int MaxDepth_Height_Tree_iteratively(Node* root){
+        // use a level wise traversal BFS
+        // Done using a queue ds 
+
+        if(root==nullptr) return 0;
+
+        int height=1;   // at least 1 node
         queue<Node*> q;
         q.push(root);
 
         while(!q.empty()){
             vector<Node*> temp;
-            while(!q.empty()){
+            for(int i=0;i<q.size();i++){
                 temp.push_back(q.front());
                 q.pop();
             }
-            int flag=0;
+
+            int flag=0; // to check if any child node
             for(auto it:temp){
-                if(it->left!=nullptr){
-                    q.push(it->left); 
-                    flag=1; 
+                if(it->left!=nullptr) {
+                    q.push(it->left);
+                    flag=1;
                 }
                 if(it->right!=nullptr){
                     q.push(it->right);
                     flag=1;
                 }
             }
-            if(flag==1) height++;
+            if(flag==1){
+                height+=1;
+            }
         }
         return height;
     }
 };
 
 /*
-          1
-       /    \
-      2      5
-     /  \   /  \
-     3  4   6   7
+        1
+       /  \
+      2    7
+     /  \
+     3  4
+       /  \
+       5   6
 
 */
 void solve(){
@@ -81,23 +91,21 @@ void solve(){
     Node five(5);
     Node six(6);
     Node seven(7);
+    Node eight(8);
 
     root.left = &two;
-    root.right = &five;
+    root.right = &seven;
 
     two.left=&three;
     two.right=&four;
-
-    five.left=&six;
-    five.right=&seven;
+    four.left=&five;
+    four.right=&six;
 
     Solution s;
-
-    int ans = s.heightOfTreeRecursive(&root);
-    cout<<"Height: "<<ans<<endl;
-
-    ans = s.heightOfLevelOrder(&root);
-    cout<<"Height: "<<ans<<endl;
+    int res = s.MaxDepth_Height_Tree_recursive(&root);
+    cout<<res<<endl;
+    res = s.MaxDepth_Height_Tree_iteratively(&root);
+    cout<<res<<endl;
 }
 
 
@@ -107,8 +115,8 @@ int main()
     cin.tie(NULL);
     cout.tie(NULL);
 #ifndef ONLINE_JUDGE
-    freopen("../input.txt", "r", stdin);
-    freopen("../output.txt", "w", stdout);
+    freopen("../../input.txt", "r", stdin);
+    freopen("../../output.txt", "w", stdout);
 #endif
 
     // ll test;

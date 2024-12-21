@@ -21,56 +21,50 @@ struct Node{
 
 class Solution{
 public:
-    // using recursive solutions
-    // TC:O(N) SC:O(height)
-    int heightOfTreeRecursive(Node* root){
-        if(root==nullptr) return 0;
 
-        int leftHeight = heightOfTreeRecursive(root->left);
-        int rightHeight = heightOfTreeRecursive(root->right);
+    // TC:O(n) SC:O(n) + O(n)
+    void LevelOrderTraversal(Node* root){
+       // Done using a Queue data structure
+       vector<int> ans;
+       queue<Node*> q;
 
-        return (1 + max(leftHeight, rightHeight));    // 1 for current node
-    }
-    
-    int heightOfLevelOrder(Node* root){
-        // if empty tree
-        if(root==nullptr){
-            return 0;
-        }
-        int height=1;   // so at least height is 1
-
-        queue<Node*> q;
+        // add root node to start
         q.push(root);
 
+        // iterate tree and do level order traversal 
         while(!q.empty()){
             vector<Node*> temp;
             while(!q.empty()){
                 temp.push_back(q.front());
                 q.pop();
             }
-            int flag=0;
             for(auto it:temp){
+                // add left and right child 
                 if(it->left!=nullptr){
-                    q.push(it->left); 
-                    flag=1; 
+                    q.push(it->left);
                 }
                 if(it->right!=nullptr){
                     q.push(it->right);
-                    flag=1;
                 }
             }
-            if(flag==1) height++;
+
+            // add it to answer 
+            for(int i=0;i<temp.size();i++){
+                ans.push_back(temp[i]->data);
+            }
         }
-        return height;
+
+        for(auto it:ans) cout<<it<<" ";
+        cout<<endl;
     }
 };
 
 /*
-          1
-       /    \
-      2      5
-     /  \   /  \
-     3  4   6   7
+        1
+       /  \
+      2    3
+        \
+        4
 
 */
 void solve(){
@@ -81,23 +75,19 @@ void solve(){
     Node five(5);
     Node six(6);
     Node seven(7);
+    Node eight(8);
 
     root.left = &two;
-    root.right = &five;
+    root.right = &seven;
 
     two.left=&three;
-    two.right=&four;
-
-    five.left=&six;
-    five.right=&seven;
+    three.right=&four;
+    four.right=&five;
+    five.right=&six;
+    seven.left=&eight;
 
     Solution s;
-
-    int ans = s.heightOfTreeRecursive(&root);
-    cout<<"Height: "<<ans<<endl;
-
-    ans = s.heightOfLevelOrder(&root);
-    cout<<"Height: "<<ans<<endl;
+    s.LevelOrderTraversal(&root);
 }
 
 
@@ -107,8 +97,8 @@ int main()
     cin.tie(NULL);
     cout.tie(NULL);
 #ifndef ONLINE_JUDGE
-    freopen("../input.txt", "r", stdin);
-    freopen("../output.txt", "w", stdout);
+    freopen("../../input.txt", "r", stdin);
+    freopen("../../output.txt", "w", stdout);
 #endif
 
     // ll test;
