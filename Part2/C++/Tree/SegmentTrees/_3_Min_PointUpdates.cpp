@@ -48,12 +48,10 @@ public:
 
     vector<int> segmentTreeArray;
     int range=0;
-    SegmentTrees(){}
-
     SegmentTrees(int n){
         // initialize segment tree array 
         range=n;
-        segmentTreeArray.resize(4*n+1);
+        segmentTreeArray.resize(4*n+1,-1);
     }
 
     void buildSegmentTree(int index,int low,int high,vector<int>& array){
@@ -108,91 +106,31 @@ public:
     */
 
     // TC: O(log n)
-    int query(int index,int low,int high,vector<int>& array){
-        // base case 
-        if(low==high){
-            segmentTreeArray[index]=array[low];
-            return 1;   // starting with OR operation 
+    int query(int index,int low,int high, int left,int right){
+        // no overlap [low high] [l r] or [l r] [low high] this side or that side 
+        if(high<left || right<low){
+            return INT_MAX;
         }
 
+        // complete overlap [low l r high]
+        if(low<=left && right<=high){
+            return segmentTreeArray[index];
+        }
+
+        // rest is partial overlap 
         int mid=low+(high-low)/2;
-        int leftNode=query(2*index+1, low,mid,array);
-        int rightNode=query(2*index+2, mid+1,high,array);
+        int leftNode=query(2*index+1,low,mid,left,right);
+        int rightNode=query(2*index+2,mid+1,high,left,right);
 
-        // left and right both node will be pointing to same value because 2^n elements
-        if(leftNode==1){
-            segmentTreeArray[index] = segmentTreeArray[2*index+1] | segmentTreeArray[2*index+2];
-            return 2;   // now previous layer will do xor operation
-        }
-       
-        segmentTreeArray[index] = segmentTreeArray[2*index+1] ^ segmentTreeArray[2*index+2];
-        return 1;   // do or operation
+        return min(leftNode,rightNode);
 
     }
-
-    void query_2(int index,int low,int high,vector<int>& array,int flag){
-        // base case 
-        if(low==high){
-            segmentTreeArray[index]=array[low];
-            return;   // starting with OR operation 
-        }
-
-        int mid=low+(high-low)/2;
-        query_2(2*index+1, low,mid,array, !flag);
-        query_2(2*index+2, mid+1,high,array, !flag);
-
-        // or is 1
-        if(flag==1){
-            segmentTreeArray[index] = segmentTreeArray[2*index+1] | segmentTreeArray[2*index+2];
-        }
-        // xor is 0
-        else segmentTreeArray[index] = segmentTreeArray[2*index+1] ^ segmentTreeArray[2*index+2];
-    }
-
-    void queryUpdate(int index,int low,int high,int i,int value,int flag){
-        // base case 
-        if(low==high){
-            segmentTreeArray[index]=value;
-            return;   // starting with OR operation 
-        }
-
-        int mid=low+(high-low)/2;
-        if(i<=mid){ 
-            // left
-            queryUpdate(2*index+1, low,mid,i,value,!flag);
-        }else{
-            // right
-            queryUpdate(2*index+2, mid+1,high,i,value,!flag);
-        }
-
-        // or is 1
-        if(flag==1){
-            segmentTreeArray[index] = segmentTreeArray[2*index+1] | segmentTreeArray[2*index+2];
-        }
-        // xor is 0
-        else segmentTreeArray[index] = segmentTreeArray[2*index+1] ^ segmentTreeArray[2*index+2];
-    }
-
-    int orXorQuery(vector<int>& array){
+    int minRangeQuery(int left,int right){
         int index=0;    // start
         int low=0;
         int high=range-1;   // 6-1=5
-        if(array.size()%2==0)
-            query_2(index,low,high,array,0);  // start with xor first 
-        else
-            query_2(index,low,high,array,1); // start with or first 
-
-        // or
-        // query(index,low,high,array);
-        return segmentTreeArray[0];
-    }
-
-    int orXorPointUpdate(int i,int value,int flag){
-        int index=0;    // start
-        int low=0;
-        int high=range-1;   // 6-1=5
-        queryUpdate(index,low,high,i,value,flag);
-        return segmentTreeArray[0];
+        int res=query(index,low,high,left,right);
+        return res;
     }
 
     // TC: O(log n)
@@ -237,46 +175,99 @@ public:
        5   5
 
 */
+void solve(){
+    // finding min and max in an array in a range in O(log n) time complexity
+    vector<int> array;
+    int n;
+    cin>>n;
+    for(int i=0;i<n;i++){
+        int ip;
+        cin>>ip;
+        array.push_back(ip);
+    }
 
+    // seg tree size is 4n
+    SegmentTrees s(array.size());
+    s.build(array);
+    // s.printSegmentTree();
+    
+    int q;
+    cin>>q;
+    // 1 is type 1 ie query
+    // 2 is type 2 i.e point update
+    while(q--){
+        int type;
+        cin>>type;
+        int l,r;
+        cin>>l>>r;
+
+        if(type==1){
+            int res=s.minRangeQuery(l,r);   // left right
+            cout<<res<<endl;
+        }else{
+            s.pointUpdate(l,r); // index value
+        }
+    }
+    
+}
 
 void solve_2(){
     vector<int> sg1;
+    vector<int> sg2;
+
     int n1;
     cin>>n1;
-
-    int q;
-    cin>>q;
-
-    int n=pow(2,n1);
-    for(int i=0;i<n;i++){
+    for(int i=0;i<n1;i++){
         int ip;
         cin>>ip;
         sg1.push_back(ip);
     }
     // seg tree size is 4n
-    SegmentTrees s1(n);
-    s1.orXorQuery(sg1);
-  
-    // build + querying    
+    SegmentTrees s1(n1);
+    s1.build(sg1);
+    // s1.printSegmentTree();
 
+    int n2;
+    cin>>n2;
+    for(int i=0;i<n2;i++){
+        int ip;
+        cin>>ip;
+        sg2.push_back(ip);
+    }
+    // seg tree size is 4n
+    SegmentTrees s2(n1);
+    s2.build(sg2);
+    // s2.printSegmentTree();
+    
+    int q;
+    cin>>q;
     // 1 is type 1 ie query
     // 2 is type 2 i.e point update
     while(q--){
-        // point update and query result return only 
-        int ind,val;
-        cin>>ind>>val;
-        ind--;  // 1<=ind<=2^n
+        int type;
+        cin>>type;
 
-        // point update first thing
-        sg1[ind]=val; 
-
-        if(n1%2==0){
-            int res=s1.orXorPointUpdate(ind,val,0);
-            cout<<res<<endl;
-        }
-        else{
-            int res=s1.orXorPointUpdate(ind,val,1);
-            cout<<res<<endl;
+        // find min of minimim of 2 segment trees
+        if(type==1){
+            int l1,r1,l2,r2;
+            cin>>l1>>r1>>l2>>r2;
+            int min1=s1.minRangeQuery(l1,r1);   // left right
+            int min2=s2.minRangeQuery(l2,r2);   // left right
+            cout<<min(min1,min2)<<endl;
+        }else{
+            // point update of 1 array
+            int arrayNo;
+            cin>>arrayNo;
+            int ind,val;
+            cin>>ind>>val;
+            
+            if(arrayNo==1){
+                s1.pointUpdate(ind,val);
+                sg1[ind]=val;
+            }else{
+                s2.pointUpdate(ind,val);
+                sg2[ind]=val;
+            }
         }
     }
 }
