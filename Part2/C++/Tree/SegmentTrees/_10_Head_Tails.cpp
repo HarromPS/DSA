@@ -79,8 +79,8 @@ public:
             // propagte lazy update down for remaining nodes to get updated
             if(low!=high){
                 // flip down lazy propagate
-                segmentTreeArray[index*2+1]->lazyNode = !segmentTreeArray[index*2+1]->lazyNode;
-                segmentTreeArray[index*2+2]->lazyNode = !segmentTreeArray[index*2+2]->lazyNode;
+                segmentTreeArray[index*2+1]->lazyNode^=1;
+                segmentTreeArray[index*2+2]->lazyNode^=1;
             }
 
             segmentTreeArray[index]->lazyNode=0;
@@ -142,8 +142,8 @@ public:
             // propagte lazy update down for remaining nodes to get updated
             if(low!=high){
                 // flip down lazy propagate
-                segmentTreeArray[index*2+1]->lazyNode = !segmentTreeArray[index*2+1]->lazyNode;
-                segmentTreeArray[index*2+2]->lazyNode = !segmentTreeArray[index*2+2]->lazyNode;
+                segmentTreeArray[index*2+1]->lazyNode^=1;
+                segmentTreeArray[index*2+2]->lazyNode^=1;
             }
 
             segmentTreeArray[index]->lazyNode=0;
@@ -158,7 +158,7 @@ public:
         if(l<=low && high<=r){
             // previous update
             // lazy propagation 
-            segmentTreeArray[index]->node = (high-low+1)-segmentTreeArray[index]->lazyNode;
+            segmentTreeArray[index]->node = (high-low+1)-segmentTreeArray[index]->node;
 
             // propagte lazy update down for remaining nodes to get updated
             if(low!=high){
@@ -209,14 +209,12 @@ void solve_2(){
     while(q--){
         int type;
         cin>>type;
-        if(type==1){    // query 
-            int l,r;
-            cin>>l>>r;
+        int l,r;
+        cin>>l>>r;
+        if(type==1){    // query             
             int res=s.sgQuery(l,r);
             cout<<res<<endl;
         }else{
-            int l,r,value;
-            cin>>l>>r>>value;
             s.sgUpdate(l,r);
         }
     }
