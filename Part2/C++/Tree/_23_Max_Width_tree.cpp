@@ -24,6 +24,8 @@ It is guaranteed that the answer will in the range of a 32-bit signed integer.
         max width between two non null nodes at any level is 4
 
 
+Using Segment Trees 
+
 */
 
 struct Node{
@@ -40,68 +42,33 @@ struct Node{
 
 class Solution{
 public:
-    // Brute force TC:O(N) SC:O(2^level -1) space complexity of a complete bt
-
-    int getHeight(Node* root){
-        if(root==nullptr) return 0;
-
-        int left=getHeight(root->left);
-        int right=getHeight(root->right);
-
-        return 1+max(left,right);
-    }
-
+    // Using segment trees 
     int widthOfBinaryTree(Node* root) {
-        vector<vector<int>> levels;
-        queue<Node*> q;
-        q.push(root);
+        // level order traversal
+        queue<pair<Node*,long long>> q;   // node, index
+        q.push({root,0});
+        int ans=0;
 
-        // run the below loop till height, so that null node can have their null nodes for each level nodes 
-        int height=getHeight(root);
-        int i=1;
-
-        while(!q.empty() && i<=height){
-            int n=q.size();
-            vector<int> temp;
-            for(int i=0;i<n;i++){
-                Node* node=q.front();
+        while(!q.empty()){
+            // take out whole level 
+            int size = q.size();
+            int min = q.front().second; // min in whole level 
+            int first, last;
+            for(int ind=0;ind<size;ind++){
+                Node* n = q.front().first;
+                int i = q.front().second;
                 q.pop();
 
-                temp.push_back(node->data);
-
-                if(node->left!=nullptr) q.push(node->left);
-                else if(i!=height) q.push(new Node(-1)) ;  
-                
-                if(node->right!=nullptr) q.push(node->right);
-                else if(i!=height)q.push(new Node(-1)) ;  
+                int currId = i - min; // i - min
+                if(ind==0) first = currId;
+                if(ind == size-1) last = currId;
+                if(n->left!=nullptr) q.push({n->left, (long long)2*currId+1});
+                if(n->right!=nullptr) q.push({n->right, (long long)2*currId+2});
             }
-            levels.push_back(temp);
-            i++;
+            ans = max(ans,last-first+1);
         }
-
-        // neglet last array inserted as it contains only nullptrs
-        int maxi=INT_MIN;
-        for(auto it:levels){
-            int i=0,n=it.size();
-            int j=n-1;
-            while(i<n) {
-                if(it[i]!=-1) break;
-                else i++;
-            }
-            while(j>=0){
-                if(it[j]!=-1) break;
-                else j--;
-            }
-
-            if(i<j){
-                // means two non null ends
-                maxi = max(maxi, j-i+1);
-            }
-        }
-        return maxi;
-    }
-
-    
+        return ans;
+    }    
 };
 
 /*
@@ -126,12 +93,10 @@ void solve(){
     Node nine(9);
 
     root.left = &two;
-    root.right = &three;
+    root.right = &five;
 
-    three.left=&four;
-    three.right=&five;
-
-    four.left=&eight;
+    two.left=&three;
+    two.right=&four;
 
     five.left=&six;
     five.right=&seven;
