@@ -7,9 +7,11 @@ using namespace std;
 #define mod 1000000007
 
 /*
-Given the root of a binary tree, the value of a target node target, and an integer k, return an array of the values of all nodes that have a distance k from the target node.
-
-You can return the answer in any order.
+Given a binary tree and a node data called target. 
+Find the minimum time required to burn the complete binary tree if the target is set on fire. 
+It is known that in 1 second all nodes connected to a given node get burned. 
+That is its left child, right child, and parent.
+Note: The tree contains unique values.
 Input:
 target node = 50
 k = 2 (dist)
@@ -45,24 +47,38 @@ public:
         printTree(node->right);
     }
 
-    vector<int> distanceK(Node* root, Node* target, int k) {
-        // 1. parent pointers
-        // 2. move 1 dist in all directions & mark visited 
-        // 3. if dist==k add it to ans and return back
+    Node* preorder(Node* node, int t){
+        if(node==nullptr) return nullptr;
+        if(node->data == t) {
+            return node;
+        }
 
-        queue<Node*> q; // queue 
-        map<Node*, Node*> parentMap;   // node parent
+        Node* left=preorder(node->left, t);
+        Node* right=preorder(node->right, t);
 
-        // add root to map and queue 
-        parentMap[root] = nullptr;    // no parent
+        if(left==nullptr) return right;
+        return left;
+    }
+
+    int minTime(Node* root, int t) {
+        // 1. get the target node address 
+        // 2. get the parent pointers 
+        // 3. traverse in all directions and get max dist from target node => min time to burn complete tree
+
+        Node* target=preorder(root,t);
+
+        map<Node*, Node*> parentMap;
+        queue<Node*> q;
+        
+        // add root node to queue and parentmap
+        parentMap[root] = nullptr;  // no parent
         q.push(root);
         while(!q.empty()){
-            Node* n = q.front();
+            Node* n=q.front();
             q.pop();
 
-            // add parents 
             if(n->left!=nullptr){
-                parentMap[n->left] = n;
+                parentMap[n->left]=n;
                 q.push(n->left);
             }
             if(n->right!=nullptr){
@@ -70,35 +86,29 @@ public:
                 q.push(n->right);
             }
         }
-        vector<int> ans;
 
-        // start from target node and move 1 distance 
-        map<Node*, bool> visitedSet;   // visited node
-        queue<pair<Node*, int>> q2; // node distance 
-        q2.push({target,0}); // 0 distance 
+        int ans=0;
+        map<Node*,bool> visitedSet;
+        queue<pair<Node*,int>> q2;
+        q2.push({target, 0});   // target node at dist 0
         while(!q2.empty()){
-            Node* n = q2.front().first;
-            int dist = q2.front().second;
-            visitedSet[n]=true;   // add it to set
+            Node* n=q2.front().first;
+            int dist=q2.front().second;
+            visitedSet[n]=true;
             q2.pop();
 
-            // if distance reached 
-            if(dist == k){
-                ans.push_back(n->data);
-                continue;
-            }
-
-            // parent exists and not visited
+            // parent exists and not visited 
             if(parentMap.find(n)!=parentMap.end() && parentMap[n]!=nullptr && visitedSet[parentMap[n]]==false){
-                q2.push({parentMap[n], dist+1});
+                q2.push({parentMap[n], dist+1});    // add parent to queue
             }
-            // left and right child 
+            // left and right child
             if(n->left!=nullptr && visitedSet[n->left]==false){
                 q2.push({n->left, dist+1});
             }
             if(n->right!=nullptr && visitedSet[n->right]==false){
                 q2.push({n->right, dist+1});
             }
+            ans=max(ans,dist);
         }
         return ans;
     }
@@ -139,9 +149,8 @@ void solve(){
 
     Solution s;
 
-    vector<int> ans=s.distanceK(&root, &two, 2);
-    for(auto it:ans) cout<<it<<" ";
-    cout<<endl;
+    int ans=s.minTime(&root, 5);
+    cout<<ans<<endl;
 }
 
 

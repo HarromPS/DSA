@@ -109,6 +109,7 @@ void solve(){
 
     five.left=&six;
     five.right=&seven;
+    
     Solution s;
 
     // vector<int> ans = s.getTopView(&root);
