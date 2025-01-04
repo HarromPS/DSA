@@ -1,5 +1,3 @@
-cpp
-
 /*
 
 One day, the schoolboy Mark misbehaved, so the teacher Sasha called him to the whiteboard.
@@ -43,3 +41,31 @@ MEX (Minimum Excluded Value):
 For a given set of numbers, the MEX is the smallest non-negative integer that does not appear in the set.
 
 */
+#include <bits/stdc++.h>
+#define ll long long
+#define mod 1000000007
+using namespace std;
+
+
+
+class Solution{
+public:
+    
+    
+};
+
+void solve(){
+}
+
+int main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+#ifndef ONLINE_JUDGE
+    freopen("../../input.txt", "r", stdin);
+    freopen("../../output.txt", "w", stdout);
+#endif
+    solve();
+    return 0;
+}
