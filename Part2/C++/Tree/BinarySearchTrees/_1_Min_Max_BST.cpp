@@ -3,6 +3,11 @@
 #define mod 1000000007
 using namespace std;
 
+/*
+
+Given the root of a Binary Search Tree.
+The task is to find the minimum/maximum valued element in this given BST. 
+ */
 struct Node{
     int data;
     struct Node* left;
@@ -17,28 +22,24 @@ struct Node{
 
 class Solution{
 public: 
-    Node* searchBST(Node* root, int val) {
+    int minValue(Node* root) {
+        int curr = INT_MAX;
         Node* node=root;
         while(node!=nullptr){
-            if(node->data == val){
-                return node;
-            }
-            if(val < node->data){
-                node=node->left;
-            }
-            else{
-                node=node->right;
-            }
+            curr=node->data;
+            node=node->left;
         }
-        return node;
+        return curr;
     }
 
-    Node* searchBST_2(Node* root, int val) {
+    int maxValue(Node* root){
+        int curr=INT_MIN;
         Node* node=root;
-        while(node!=nullptr && node->data!=val){
-            node=val<node->data ? node->left:node->right;
+        while(node!=nullptr){
+            curr=node->data;
+            node=node->right;
         }
-        return node;
+        return curr;
     }
 };
 
@@ -53,36 +54,34 @@ public:
 
 */
 void solve(){
-    Node root(8);
+    Node root(10);
     Node two(5);
-    Node three(12);
-    Node four(4);
-    Node five(7);
+    Node three(20);
+    Node four(2);
+    Node five(5);
 
-    Node six(10);
-    Node seven(14);
-    Node eight(6);
-    Node nine(13);
+    Node six(6);
+    Node seven(7);
+    Node eight(8);
+    Node nine(4);
 
     root.left = &two;
     root.right = &three;
 
     two.left=&four;
-    two.right=&five;
+    // two.right=&five;
 
-    three.left=&six;
-    three.right=&seven;
-    
-    five.left=&eight;
-    
-    seven.left=&nine;
+    // five.left=&six;
+    // five.right=&seven;
 
     Solution s;
-    Node* res=s.searchBST(&root,4);
-    cout<<res->data<<endl;
-    res=s.searchBST_2(&root,4);
-    cout<<res->data<<endl;
+    int res=s.minValue(&root);
+    cout<<res<<endl;
+    res=s.maxValue(&root);
+    cout<<res<<endl;
+    
 }
+
 
 int main()
 {

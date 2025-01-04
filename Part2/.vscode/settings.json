@@ -31,7 +31,8 @@
         "tuple": "cpp",
         "valarray": "cpp",
         "variant": "cpp",
-        "vector": "cpp"
+        "vector": "cpp",
+        "new": "cpp"
     },
     "java.debug.settings.onBuildFailureProceed": true,
     
