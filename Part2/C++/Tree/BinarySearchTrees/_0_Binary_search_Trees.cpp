@@ -17,7 +17,21 @@ struct Node{
 
 class Solution{
 public: 
-   
+    Node* searchBST(Node* root, int val) {
+        while(root!=nullptr){
+            if(root->data == val) return root;
+            if(val < root->data) root=root->left;
+            else root=root->right;
+        }
+        return root;
+    }
+
+    Node* searchBST_2(Node* root, int val) {
+        while(root!=nullptr && root->data!=val){
+            root=val<root->data ? root->left:root->right;
+        }
+        return root;
+    }
 };
 
 /*
@@ -52,6 +66,11 @@ void solve(){
     five.right=&seven;
 
     Solution s;
+    Node* res=s.searchBST(&root,4);
+    cout<<res->data<<endl;
+    res=s.searchBST_2(&root,4);
+    cout<<res->data<<endl;
+    
 }
 
 

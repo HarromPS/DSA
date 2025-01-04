@@ -97,8 +97,8 @@ int main()
     cin.tie(NULL);
     cout.tie(NULL);
 #ifndef ONLINE_JUDGE
-    freopen("../input.txt", "r", stdin);
-    freopen("../output.txt", "w", stdout);
+    freopen("../../input.txt", "r", stdin);
+    freopen("../../output.txt", "w", stdout);
 #endif
     solve();
     return 0;
