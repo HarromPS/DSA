@@ -41,20 +41,75 @@ MEX (Minimum Excluded Value):
 For a given set of numbers, the MEX is the smallest non-negative integer that does not appear in the set.
 
 */
+
 #include <bits/stdc++.h>
 #define ll long long
 #define mod 1000000007
 using namespace std;
 
-
-
-class Solution{
-public:
-    
-    
-};
-
 void solve(){
+    int n,m;
+    cin>>n>>m;
+    vector<vector<int>> vec;
+    int x=0;
+    for(int i=0;i<n;i++){
+        vector<int> temp;
+        for(int j=0;j<m;j++){
+            temp.push_back(x);
+            // cout<<x<<" ";
+            x++;
+        }
+        // cout<<endl;
+        vec.push_back(temp);
+    }
+
+    int rowSum=0;
+
+    map<int,int> mp;
+    for(int i=0;i<=m*n;i++) mp[i]=0; // reset
+
+    // traverse each row 
+    for(int i=0;i<n;i++){
+        for(int j=0;j<m;j++){
+            if(mp.find(vec[i][j])!=mp.end()) {  // present
+                mp[vec[i][j]]=1;    // check attendance of every integer
+            }
+        }
+        for(auto it: mp){
+            if(it.second==0){
+                rowSum+=it.first;
+                break;
+            }
+        }
+        // reset 
+        for(int i=0;i<=m*n;i++) mp[i]=0; 
+    }   
+
+    int colSum=0;
+    // traverse each column
+    for(int j=0;j<m;j++){
+        for(int i=0;i<n;i++){
+            if(mp.find(vec[i][j])!=mp.end()) {  // present
+                mp[vec[i][j]]=1;    // check attendance of every integer
+            }
+        }
+        for(auto it: mp){
+            if(it.second==0){
+                colSum+=it.first;
+                break;
+            }
+        }
+        // reset 
+        for(int i=0;i<=m*n;i++) mp[i]=0; 
+    }
+
+    cout<<rowSum+colSum<<endl;
+}
+
+void solve_2(){
+    int n,m;
+    cin>>n>>m;
+    cout<<max(n,m)+1<<endl;
 }
 
 int main()
@@ -66,6 +121,28 @@ int main()
     freopen("../../input.txt", "r", stdin);
     freopen("../../output.txt", "w", stdout);
 #endif
-    solve();
+    int t;
+    cin>>t;
+    while(t--){
+        // solve();
+        solve_2();
+    }
+    // solve();
     return 0;
 }
+
+
+// lets see 
+
+// rows wise first 
+// 9
+// 0
+// 0
+// 0
+// 0
+// 0
+// 0
+// 0
+
+// col wise
+// 1 0 0 0 0 0 0 0 
