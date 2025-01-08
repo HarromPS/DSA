@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 #define ll long long
 #define mod 1000000007
-using namespace std;
+// using namespace std;
 
 /*
 You're given a binary tree. 
@@ -9,7 +9,8 @@ Your task is to find the size of the largest subtree within this binary tree tha
 The size of a subtree is defined as the number of nodes it contains.
 
 A subtree of the binary tree is considered a BST if for every node in that subtree, 
-the left child is less than the node, and the right child is greater than the node, without any duplicate values in the subtree.
+the left child is less than the node, and the right child is greater than the node, 
+without any duplicate values in the subtree.
 
 
                10
@@ -33,89 +34,93 @@ struct Node{
     }
 }typedef Node;
 
-class Solution{
+class NodeValues{
 public:
-    void printTree(Node* node){
-        if(node==nullptr) return;
-        printTree(node->left);
-        cout<<node->data<<" ";
-        printTree(node->right);
-    }
+    int size;
+    int largest;    // needed from left child
+    int smallest;   // needed from right child
 
-    // TC:O(N) SC:O(1)
-    void recoverTree(Node* root) {
-        // doing a morris inorder traversal 
-        Node* prev=nullptr;
-        Node* first_prev = nullptr;
-        Node* first_curr = nullptr;
-        Node* second = nullptr;
-        if(root==nullptr) return;
-
-        Node* curr=root;
-        while(curr!=nullptr){
-            if(curr->left==nullptr){
-                if(prev!=nullptr && curr->data < prev->data){
-                    if(first_prev==nullptr){
-                        first_prev=prev;
-                        first_curr=curr;
-                    }else{
-                        second=curr;
-                        // break;
-                    }
-                }
-                prev=curr;
-                curr=curr->right;
-            }else{
-                Node* thread=curr->left;
-                while(thread->right!=nullptr && thread->right!=curr){
-                    thread=thread->right;
-                }
-                if(thread->right==nullptr){
-                    thread->right=curr;
-                    curr=curr->left;
-                }else{
-                    thread->right=nullptr;
-                    if(prev!=nullptr && curr->data < prev->data){
-                        if(first_prev==nullptr){
-                            first_prev=prev;
-                            first_curr=curr;
-                        }else{
-                            second=curr;
-                            // break;
-                        }
-                    }
-                    prev=curr;
-                    curr=curr->right;
-                }
-            }
-        }
-
-        // swaps 
-        // Tree is already valid or pointers are null
-        if (first_prev == nullptr || first_curr == nullptr) {
-            return;
-        }
-
-        if(second==nullptr){
-            // swap first prev and first curr 
-            int temp=first_prev->data;
-            first_prev->data=first_curr->data;
-            first_curr->data=temp;
-        }else{
-            // swap first curr and second 
-            int temp=first_prev->data;
-            first_prev->data=second->data;
-            second->data=temp;
-        }
+    NodeValues(int _size,int _largest,int _smallest){
+        size=_size;
+        largest=_largest;
+        smallest=_smallest;
     }
 };
+
+class Solution{
+public:
+    bool validateBST(Node* node,int* nodeCount,long low,long high){
+        if(node==nullptr) return true;
+
+        if(!(low<node->data && node->data<high)){
+            return false;
+        }
+
+        bool left=validateBST(node->left,nodeCount,low,node->data);
+        bool right=validateBST(node->right,nodeCount,node->data,high);
+
+        if(!left || !right) return false;
+        *nodeCount+=1;
+        return true;
+    }
+
+    void preorderTraversal(Node* node){
+        if(node==nullptr) return;
+        
+        int tempCount=0;
+        bool res = validateBST(node,&tempCount,LLONG_MIN,LLONG_MAX);
+        if(res==true){       
+            // if its a valid bst get all nodes 
+            count=std::max(count,tempCount);
+        }
+        tempCount=0;
+
+        preorderTraversal(node->left);
+        preorderTraversal(node->right);
+    }
+
+    // there will always be a subtree with a valid bst and size 1
+    int count=1 ;    // a global variable 
+
+    // TC:O(N^2) SC:O(N^2)
+    int largestBstBrute(Node *root){
+        // traverse tree and return the max nodes in a subtree
+        preorderTraversal(root);
+        return count;
+    }
+
+    NodeValues solveLargestBst(Node* root){
+        // if null node 
+        if(root==nullptr) {
+            return NodeValues(0,INT_MIN,INT_MAX);
+        }
+
+        // post order traversal
+        NodeValues left = solveLargestBst(root->left);
+        NodeValues right = solveLargestBst(root->right);
+
+        // if it is a valid bst 
+        if(left.largest < root->data && root->data < right.smallest){
+            return NodeValues(1+left.size+right.size, std::max(root->data, right.largest), std::min(root->data, left.smallest));
+        }
+
+        // else not a bst, so return values such that its parents cant be a valid bst
+        return NodeValues(std::max(left.size,right.size), INT_MAX, INT_MIN);
+    }
+    int largestBst(Node *root){
+        NodeValues n = solveLargestBst(root);
+        return n.size;
+    }
+};
+
 void solve(){
     Node root(10);
-    Node two(6);
-    Node three(13);
-    Node four(3);
-    Node five(5);
-    Node six(11);
+    Node two(5);
+    Node three(15);
+    Node four(1);
+    Node five(8);
+    Node six(7);
+
     Node seven(14);
     Node eight(2);
     Node nine(4);
@@ -127,37 +132,32 @@ void solve(){
     two.left=&four;
     two.right=&five;
 
-    three.left=&six;
-    three.right=&seven;
+    three.right=&six;
+    // three.right=&seven;
 
-    four.left=&eight;
-    four.right=&nine;
+    // four.left=&eight;
+    // four.right=&nine;
 
-    five.right=&ten;
+    // five.right=&ten;
     
     Solution s;
-    s.printTree(&root);
-    cout<<endl;
-    s.recoverTree(&root);    
-    s.printTree(&root);
+    int res=s.largestBstBrute(&root);
+    std::cout<<res<<std::endl;
+    res=s.largestBst(&root);
+    std::cout<<res<<std::endl;
+   
 }
 
 
 int main()
 {
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-    cout.tie(NULL);
+    std::ios_base::sync_with_stdio(false);
+    std::cin.tie(NULL);
+    std::cout.tie(NULL);
 #ifndef ONLINE_JUDGE
     freopen("../../input.txt", "r", stdin);
     freopen("../../output.txt", "w", stdout);
 #endif
-    // int t;
-    // cin>>t;
-    // while(t--){
-    // solve();
-        
-    // }
     solve();
     return 0;
 }
