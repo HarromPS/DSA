@@ -14,18 +14,13 @@ BINARY SEARCH ALGORITHM TECHNIQUE FOR SEARCHING IN SORTED OBJECTS
 Lower Bound or CEIL
 -> smallest value such that it is >= k
 
-Upper bound
--> largest value such that it is > k
-
 [3 5 8 15 19]
 for k=5
 
-lower bound = 5 as 5>=k
-upper bound = 8 as 8>k
+lower bound or ceil = 5 as 5>=k
 
 for k=10
-lower bound = 15 as 15>=k
-upper bound = 15 as 15>k
+lower bound or ceil = 15 as 15>=k
 */
 
 class Solution {
@@ -38,25 +33,8 @@ public:
         while(low<=high){
             int mid=low+(high-low)/2;
             if(arr[mid]>=k){
-                ansIndex=std::min(ansIndex,mid);
-                high=mid-1;         // minimize the index to get lower bound or ceil value
-            }else{
-                low=mid+1;
-            }
-        }
-        if(ansIndex==INT_MAX) return arr.size();
-        return ansIndex;
-    }
-
-    int upper_bound_floor(std::vector<int>& arr,int k){
-        int ansIndex = INT_MAX;
-        int low=0;
-        int high=arr.size()-1;
-        while(low<=high){
-            int mid=low+(high-low)/2;
-            if(arr[mid]>k){
-                ansIndex=std::min(ansIndex,mid);
-                high=mid-1;         // just > k
+                ansIndex=std::min(ansIndex,arr[mid]);
+                high=mid-1;         // minimize the index to get ceil value
             }else{
                 low=mid+1;
             }
@@ -79,8 +57,6 @@ void solve(){
 
     Solution s;
     int res=s.lower_bound_ceil(arr,target);
-    std::cout<<res<<std::endl;
-    res=s.upper_bound_floor(arr,target);
     std::cout<<res<<std::endl;
 }
 
