@@ -75,8 +75,8 @@ public:
             }
             */
             // ceil value
-            // int ceilVal=((double)piles[i]+k-1)/(double)k;
-            // reqTime+=ceilVal;
+            int ceilVal=((double)piles[i]+k-1)/(double)k;
+            reqTime+=ceilVal;
 
             // int ceilVal=std::ceil((double)piles[i]/(double)k);
             // reqTime+=ceilVal;
