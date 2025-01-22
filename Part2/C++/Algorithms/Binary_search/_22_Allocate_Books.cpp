@@ -82,7 +82,7 @@ public:
                 low=mid+1;
             }
         }
-        return low;   // not possible to allot books to k students
+        return low;  
     }
 };
 
