@@ -48,7 +48,89 @@ public:
         return arr2[n/2];
     }
 
+    bool checkIsMedian(std::vector<std::vector<int>>& arr,int median,int least){
+        int n1=arr.size();
+        int n2=arr[0].size();
+        int cnt=0;              // no of elements <= median value
+        for(int i=0;i<n1;i++){
+            for(int j=0;j<n2;j++){
+                if(arr[i][j]<=median) cnt+=1;
+            }
+        }
+        if(cnt>=least){
+            return true;
+        }
+        return false;
+    }
     
+    // TC:O(n1 + log(max - min) * (n1*n2)) SC:O(1)
+    int median(std::vector<std::vector<int>> &arr) {
+        int n1=arr.size();
+        int n2=arr[0].size();
+        
+        int n=n1*n2;
+        int least=(n/2)+1;
+        int low=std::numeric_limits<int>::max(),high=std::numeric_limits<int>::min();
+        for(int i=0;i<n1;i++){
+            low=std::min(low,arr[i][0]);
+            high=std::max(high,arr[i][n2-1]);
+        }
+        int ans=0;
+        while(low<=high){
+            int mid=low+(high-low)/2;
+            if(checkIsMedian(arr,mid,least)){
+                ans=mid;
+                high=mid-1; // minimize
+            }else{
+                low=mid+1;
+            }
+        }
+        return low;
+    }
+
+
+    bool checkIsMedian2(std::vector<std::vector<int>>& arr,int median,int least){
+        int n1=arr.size();
+        int n2=arr[0].size();
+        int cnt=0;              // no of elements <= median value
+        for(int i=0;i<n1;i++){
+            // returns a iterator points to first element greater than median
+            auto upIndex = upper_bound(arr[i].begin(),arr[i].end(),median);
+            int ele = (upIndex-arr[i].begin()); // get index 
+            cnt+=(ele);
+        }
+        if(cnt>=least){
+            return true;
+        }
+        return false;
+    }
+
+    int median2(std::vector<std::vector<int>> &arr) {
+        int n1=arr.size();
+        int n2=arr[0].size();
+        
+        int n=n1*n2;
+        int least=(n/2)+1;
+        int low=std::numeric_limits<int>::max();
+        int high=std::numeric_limits<int>::min();
+
+        for(int i=0;i<n1;i++){
+            low=std::min(low,arr[i][0]);
+            high=std::max(high,arr[i][n2-1]);
+        }
+
+        int ans=0;
+        while(low<=high){
+            int mid=low+(high-low)/2;
+            if(checkIsMedian2(arr,mid,least)){
+                ans=mid;
+                high=mid-1; // minimize
+            }else{
+                low=mid+1;
+            }
+        }
+        return low;
+    }
    
 };
 
@@ -68,7 +150,11 @@ void solve(){
     }   
 
     Solution s;
-    int res=s.medianBrute(arr);
+    // int res=s.medianBrute(arr);
+    // std::cout<<res<<std::endl;
+    // res=s.median(arr);
+    // std::cout<<res<<std::endl;
+    int res=s.median2(arr);
     std::cout<<res<<std::endl;
 }
 

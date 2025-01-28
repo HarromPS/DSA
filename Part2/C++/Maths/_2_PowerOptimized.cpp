@@ -9,7 +9,7 @@ double BinaryExponentiation(double x, int n)
 {
     // finds the power of a number using exponentiation
     /*
-    2^10 = (2 x 2)^5 = (4)^5 => 4 x 246 => 1024
+    2^10 = (2 x 2)^5 = (4)^5 => 4 x 256 => 1024
 
     4^5 = 4 x 4^4 => 4 x 256
 
@@ -18,6 +18,16 @@ double BinaryExponentiation(double x, int n)
     16^2 = (16 x 16)^1 = 256^1 => 256
 
     256^1 = 256^1 x 256^0 = 256
+
+    /////////////////////////////////////////////
+
+    2^10 = (2)^(5*2) = (2^2)^5 => 4^5
+
+    4^5 = 4 x 4^4 => 4 x (4)^(2*2) => 4 x (4^2)^2 => 4 x (16)^2
+
+    16^2 = (16)^(2*1) = (16^2)^1 => 256^1
+
+    256^1 = 256 * 256^0 = 256
 
     so do until n is zero
 
