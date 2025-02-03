@@ -3,7 +3,7 @@
 #include<vector>
 using namespace std;
 
-// subarrays i.e the power set
+// subsequences i.e the power set
 void printS(int index,int n,vector<int>& arr,int* num){
     if(index>=n){
         // print
