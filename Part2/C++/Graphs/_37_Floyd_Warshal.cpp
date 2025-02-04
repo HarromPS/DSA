@@ -21,6 +21,8 @@ Explanation: We can reach 2 from 0 as 0->1->2 and the cost will be 1+6=7 which i
 Floyd Warshall | Shortest path | Negative cycles | Directed & Undirected Graphs | multi-source to all nodes
 */
 
+// shortest distances between every pair of vertices in a given edge-weighted directed graph
+
 class Solution
 {
 public:

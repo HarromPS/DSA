@@ -20,7 +20,9 @@ Explanation:
 Step 1: 3*2 = 6 % 100000 = 6 
 Step 2: 6*5 = 30 % 100000 = 30
 
+
 Bellman ford | Shortest path | Negative cycles | Directed Graphs
+shortest distance of all the vertices from the source vertex src
 */
 
 class Solution
