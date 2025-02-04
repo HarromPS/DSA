@@ -22,6 +22,33 @@ DFS -> trying all paths | Recursion | src to all the vertices
 class Solution
 {
 public:
+    vector<int> shortestPath(vector<vector<int>>& adj, int src) {
+        int n=adj.size();
+        vector<int> dist(n,INT_MAX);
+        dist[src]=0;
+        queue<pair<int,int>> q;
+        q.push({src,0});
+        
+        while(!q.empty()){
+            int node=q.front().first;
+            int d=q.front().second;
+            q.pop();
+            
+            // traverse all the neighbors 
+            for(auto neigh: adj[node]){
+                int totlDist=d+1;   // total dist to any neigh from this node 
+                if(dist[neigh] > totlDist){
+                    dist[neigh]=min(dist[neigh],totlDist);
+                    q.push({neigh, totlDist});
+                }
+            }
+        }
+        for(int i=0;i<n;i++){
+            if(dist[i]==INT_MAX) dist[i]=-1;
+        }
+        return dist;
+    }
+    
     void dfs(int src,vector<int> adj_list[],vector<int>& dist,vector<int>& visited){
         visited[src]=1;
         int neigh_weight=1;
