@@ -60,6 +60,7 @@ public:
 class Solution
 {
 public:
+    
     bool detect_Cycle(int src, vector<int>& visited,vector<int> adj_list[]){
         // visit 1st node
         visited[src] = 1;
@@ -89,6 +90,8 @@ public:
         return false;
 
     }
+
+    
 };
 
 void solve()

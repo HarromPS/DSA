@@ -119,8 +119,10 @@ void solve()
         // if not visited, detect cycle for that component as a starting point
         if(visited[i]!=1){
             bool ans = s.detect_Cycle(i,visited,adj_list);
+            if(ans) cout<<"Cycle\n";
         }
     }
+    cout<<"No Cycle"<<endl;
 }
 
 int main()

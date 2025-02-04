@@ -27,6 +27,7 @@ using namespace std;
  *
  */
 
+// TC:O(2 * edges):degree of a node + O(n)
 void DFS_Traversal(int node, vector<int> &visited, vector<int> adj_list[])
 {
     // mark node as visited
