@@ -77,12 +77,10 @@ public class _10_Triangle {
             return 0;
         }
         
-
         // get the minimum path sum from the next row and next row's diagonal
         int down = minPathSumTriangleRecursion_1(arr, i + 1, j, n);
         int downDiagonal = minPathSumTriangleRecursion_1(arr, i + 1, j + 1, n);  
 
-        
         // return the current element plus the minimum path sum from the two possible paths
         return arr.get(i).get(j) + Math.min(down, downDiagonal);
     }
