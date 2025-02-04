@@ -25,6 +25,18 @@ Bellman ford | Shortest path | Negative cycles | Directed Graphs
 shortest distance of all the vertices from the source vertex src
 */
 
+/*
+
+step1: all edges in any order 
+step2: relax all the edges n-1 times sequentially
+step3: relax is minimizing the dist to any node if dist[u]+wt dist[v] then
+                                                    dist[v]=dist[u]+wt
+
+why n-1? 
+since in a graph of n nodes in worst case, you will take n-1 edges to reach 
+from first to last, thereby we iterate for n-1 iterations
+*/
+
 class Solution
 {
 public:
