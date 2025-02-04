@@ -23,6 +23,7 @@ class Solution
 {
 public:
     vector<int> shortestPath(vector<vector<int>>& adj, int src) {
+         // we have unit weights for each vertex 
         int n=adj.size();
         vector<int> dist(n,INT_MAX);
         dist[src]=0;
@@ -48,7 +49,7 @@ public:
         }
         return dist;
     }
-    
+
     void dfs(int src,vector<int> adj_list[],vector<int>& dist,vector<int>& visited){
         visited[src]=1;
         int neigh_weight=1;
