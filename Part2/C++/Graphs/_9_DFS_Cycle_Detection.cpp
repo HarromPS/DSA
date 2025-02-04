@@ -69,7 +69,8 @@ public:
             // if not visited visit it, add to queue
             if(visited[neigh]!=1){
                 // go and explore its depths 
-                return detect_Cycle(neigh, node,visited,adj_list);
+                bool res = detect_Cycle(neigh, node,visited,adj_list);
+                if(res) return true;    // only if cycle detected, else go for next recursive calls
 
             }else if(parent != neigh){  // if already visited, check if that neighbour 1 if its parent -> if not loop
                 return true;
