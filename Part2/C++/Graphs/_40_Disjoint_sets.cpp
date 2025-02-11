@@ -55,11 +55,11 @@ public:
 
         // else if check the rank 
         if(rank[pu] < rank[pv]){
-            parent[pu] = parent[pv];
+            parent[pu] = pv;
         }else if(rank[pu] > rank[pv]){
-            parent[pv] = parent[pu];
+            parent[pv] = pu;
         }else{
-            parent[pv] = parent[pu];
+            parent[pv] = pu;
             // update the rank 
             rank[pu]++;
         }
@@ -87,6 +87,61 @@ public:
         }
     }
 
+};
+
+class DSU{
+public: 
+    vector<int> rank,parent,size;
+    DSU(int n){
+        rank.resize(n+1,0);
+        size.resize(n+1,1);
+        parent.resize(n+1,0);
+        for(int i=0;i<=n;i++){
+            parent[i]=i;            
+        }
+    }
+    
+    int findUParent(int node){
+        if(node==parent[node]){
+            return node;
+        }
+        return parent[node]=findUParent(parent[node]);
+    }
+    
+    void unionByRank(int u,int v){
+        int ulp_u=findUParent(u);
+        int ulp_v=findUParent(v);
+        if(ulp_u == ulp_v){
+            return;
+        }
+        
+        if(rank[ulp_u] < rank[ulp_v]){
+            parent[ulp_u] = ulp_v;
+        }
+        else if(rank[ulp_v] < rank[ulp_u]){
+            parent[ulp_v]=ulp_u;
+        }else{
+            parent[ulp_v]=ulp_u;
+            rank[ulp_u]+=1;
+        }
+    }
+    
+    void unionBySize(int u,int v){
+        int ulp_u=findUParent(u);
+        int ulp_v=findUParent(v);
+        if(ulp_u == ulp_v){
+            return;
+        }
+        
+        if(size[ulp_u] < size[ulp_v]){
+            parent[ulp_u] = ulp_v;
+            size[ulp_v]+=size[ulp_u];
+        }
+        else{
+            parent[ulp_v]=ulp_u;
+            size[ulp_u]+=size[ulp_v];
+        }
+    }
 };
 
 void solve()

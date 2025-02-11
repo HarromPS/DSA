@@ -1,7 +1,1 @@
-6
-a
-b
-ba
-bca
-bda
-bdca
+1

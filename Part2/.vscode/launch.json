@@ -6,6 +6,41 @@
     "configurations": [
         {
             "type": "java",
+            "name": "_236A",
+            "request": "launch",
+            "mainClass": "Java.CP._236A",
+            "projectName": "Part2_8c187424"
+        },
+        {
+            "type": "java",
+            "name": "MergeSort",
+            "request": "launch",
+            "mainClass": "Java.Algorithms.MergeSort",
+            "projectName": "Part2_8c187424"
+        },
+        {
+            "type": "java",
+            "name": "Main",
+            "request": "launch",
+            "mainClass": "Java.Graphs.Main",
+            "projectName": "Part2_8c187424"
+        },
+        {
+            "type": "java",
+            "name": "_5_Prims",
+            "request": "launch",
+            "mainClass": "Java.Graphs._5_Prims",
+            "projectName": "Part2_8c187424"
+        },
+        {
+            "type": "java",
+            "name": "_4_DSU",
+            "request": "launch",
+            "mainClass": "Java.Graphs._4_DSU",
+            "projectName": "Part2_8c187424"
+        },
+        {
+            "type": "java",
             "name": "_7_Vertical_Order",
             "request": "launch",
             "mainClass": "Java.Tree._7_Vertical_Order",
