@@ -92,7 +92,7 @@ public:
     }
 
     // 6. remove 1st set bit from right (lsb)
-    void rightMostUnset1(int n){
+    void removeRightMostUnset1(int n){
         // check 1st set bit and make it unset 
         int i=0;
         int ans=0;
@@ -107,7 +107,7 @@ public:
         std::cout<<ans<<std::endl;
     }
 
-    void rightMostUnset2(int n){
+    void removeRightMostUnset2(int n){
         // n-1 sets 1st set bit to 0 and all bits on right to 1
         // 16 -     1 0 0 0 0 
         // 15 -     0 1 1 1 1 
@@ -118,7 +118,7 @@ public:
     }
 
     // 7. set 1st unset bit from right (lsb)
-    void rightMostSet1(int n){
+    void setRightMostSet1(int n){
         // check 1st set bit and make it unset 
         int i=0;
         int ans=0;
@@ -136,24 +136,26 @@ public:
     // Return the number after setting the rightmost unset bit of 'N'. 
     // If there are no unset bits in N's binary representation, 
     // then the number should remain unchanged.
-    void rightMostSet2(int n){
+    void setRightMostSet2(int n){
         // using right shift 
         int i=0;
-        int temp=0;
+        int temp=n;
         int ans=0;
         while(temp>0){
             // check 
-            if((n >> i & 1) == 0){
+            if(((n >> i) & 1) == 0){
+                // if found a bit which is unset 
                 ans = (n | (1<<i));
-                break;
+                std::cout<<ans<<std::endl;
+                return;
             }
             i++;
+            temp>>=1;
         }
-        ans = n;
-        std::cout<<ans<<std::endl;
+        std::cout<<n<<std::endl;
     }
 
-    void rightMostSet3(int n){
+    void setRightMostSet3(int n){
         // N + 1 flips the rightmost unset bit to 1 and all bits to its right to 0.
         int ans = (n | (n+1));
         if((n & (n+1)) == 0){
@@ -176,11 +178,11 @@ void solve(){
     s.swapNos(n,n+10);
     s.toggleIthBitBrute(n,i);
     s.toggleIthBit(n,i);
-    s.rightMostUnset1(n);
-    s.rightMostUnset2(n);
-    s.rightMostSet1(n);
-    s.rightMostSet2(n);
-    s.rightMostSet3(n);
+    s.removeRightMostUnset1(n);
+    s.removeRightMostUnset2(n);
+    s.setRightMostSet1(n);
+    s.setRightMostSet2(n);
+    s.setRightMostSet3(n);
 }
 
 int main()

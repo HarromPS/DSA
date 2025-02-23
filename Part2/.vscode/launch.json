@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "_0_Graph_Representation",
+            "request": "launch",
+            "mainClass": "Java.Graphs._0_Graph_Representation",
+            "projectName": "Part2_8c187424"
+        },
+        {
+            "type": "java",
             "name": "_236A",
             "request": "launch",
             "mainClass": "Java.CP._236A",
